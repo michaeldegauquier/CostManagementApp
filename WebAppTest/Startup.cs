@@ -1,5 +1,7 @@
 using Application;
 using Application.Common.Interfaces;
+using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -35,12 +37,12 @@ namespace WebAppTest
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbContext")));
             services.AddScoped<IDatabaseContext>(provider => provider.GetService<DatabaseContext>());
 
-            /*services.AddControllersWithViews()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IDatabaseContext>());*/
+            services.AddControllersWithViews()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IDatabaseContext>());
 
             services.AddCors();
 
-            //services.AddMediatR(typeof(Startup));
+            services.AddMediatR(typeof(Startup));
 
             services.Configure<FormOptions>(o =>
             {
