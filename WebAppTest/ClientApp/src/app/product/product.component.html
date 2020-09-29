@@ -1,4 +1,51 @@
-<ul>
-    <li><button>Test</button></li>
-    <li><input type="text"/></li>
-</ul>
+<div>
+    <ul>
+        <li><button class="normalButton buttonColor"><i class="material-icons md-18">add</i></button></li>
+        <li><input type="text" class="inputFieldYear" placeholder="Jaar"/></li>
+        <li><input type="text" class="inputFieldMonth" placeholder="Maand"/></li>
+        <li><input type="text" class="inputFieldDay" placeholder="Dag"/></li>
+    </ul>
+
+    <div class="scrollable">
+        <table mat-table class="table table-striped" [dataSource]="dataSource">
+            <ng-container matColumnDef="DatePurchased">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Datum<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    {{product.datePurchased}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Description">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Beschrijving<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    {{product.description}}
+                </td>
+            </ng-container>
+
+            <!--ng-container matColumnDef="Price">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Kosten<i class="material-icons md-18">{{buttonTextLogTypes}}</i>
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    {{product.Price}}
+                </td>
+            </ng-container-->
+
+            <ng-container matColumnDef="Paid">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Betaald?<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    {{product.paid}}
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table_tr"></tr>
+        </table>
+    </div>
+</div>

@@ -14,6 +14,10 @@ a.navbar-brand {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+.mb-3, .my-3 {
+  margin-bottom: 0rem!important; /*navbar margin*/
+}
+
 /*Toggler*/
 .toggle-button {
   padding: 8px 0px 8px 0px;

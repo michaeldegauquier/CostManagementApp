@@ -1,9 +1,9 @@
+  /*Function Bar*/
   ul {
     list-style-type: none;
     margin: 0;
     padding: 8px;
     overflow: hidden;
-    background-color: #333;
   }
   
   li {
@@ -18,4 +18,76 @@
   li input {
     display: block;
     text-decoration: none;
+  }
+
+  /*Table*/
+  .table_tr {
+    height: 1%;
+    vertical-align: middle;
+  }
+
+  .table_th {
+    height: 1%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    vertical-align: middle;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+  }
+
+  .table_td {
+    vertical-align: middle;
+  }
+
+  /*Buttons, inputs*/
+  .normalButton {
+    border: none;
+    padding: 6px 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    margin-right: 5px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  .buttonColor {
+    background-color: #0080e8;
+  }
+
+  .buttonColor:hover {
+    background-color: #005296;
+  }
+
+  .material-icons.md-18 { 
+    font-size: 24px; 
+    display: inline-flex;
+    vertical-align: middle;
+    cursor: pointer;
+    color: white;
+  }
+
+  .inputFieldYear {
+    margin-right: 5px;
+    padding: 4.5px 8px;
+    width: 55px;
+  }
+
+  .inputFieldMonth {
+    margin-right: 5px;
+    padding: 4.5px 8px;
+    width: 40px;
+  }
+
+  .inputFieldDay {
+    margin-right: 5px;
+    padding: 4.5px 8px;
+    width: 40px;
   }
