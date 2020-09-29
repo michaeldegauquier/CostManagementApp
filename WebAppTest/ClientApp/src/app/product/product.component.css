@@ -1,0 +1,21 @@
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 8px;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li button {
+    display: block;
+    text-decoration: none;
+  }
+
+  li input {
+    display: block;
+    text-decoration: none;
+  }
