@@ -1,7 +1,52 @@
+/*Navbar*/
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+}
+
+.navbar {
+  background-color: #0080e8;
+  padding: 0px 16px 0px 16px;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+/*Toggler*/
+.toggle-button {
+  padding: 8px 0px 8px 0px;
+}
+
+.toggler {
+  border: 1px solid white;
+}
+
+.material-icons.md-18 { 
+  font-size: 30px; 
+  display: inline-flex;
+  vertical-align: middle;
+  cursor: pointer;
+  color: white;
+}
+
+/*buttons navbar*/
+.nav-item {
+  background-color: #0080e8;
+  transition: 0.3s;
+  padding: 8px 8px 8px 8px;
+}
+
+.nav-item:hover {
+  background-color: #005296;
+  transition: 0.3s;
+  padding: 8px 8px 8px 8px;
+}
+
+/*Extra*/
+.textColor {
+  color: white;
 }
 
 html {
@@ -11,34 +56,4 @@ html {
   html {
     font-size: 16px;
   }
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-.backgroundColor {
-  background-color: #0080e8;
-}
-
-.textColor {
-  color: white;
-}
-
-.toggler {
-  border: 1px solid white;
-}
-
-/*togglebutton with only an icon*/
-.material-icons.md-18 { 
-  font-size: 30px; 
-  display: inline-flex;
-  vertical-align: middle;
-  cursor: pointer;
-  color: white;
-}
-
-.nav-item {
-  border-right: white;
-  border-left: white;
 }
