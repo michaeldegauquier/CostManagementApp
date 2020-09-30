@@ -10,6 +10,7 @@ namespace Application.Commands.Product.Commands.CreateProduct
     {
         public DateTime DatePurchased { get; set; }
         public string Description { get; set; }
+        public double Price { get; set; }
         public bool Paid { get; set; }
 
         public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, long>
@@ -26,6 +27,7 @@ namespace Application.Commands.Product.Commands.CreateProduct
                 var product = new Domain.Models.Product();
                 product.DatePurchased = request.DatePurchased;
                 product.Description = request.Description.Trim();
+                product.Price = request.Price;
                 product.Paid = request.Paid;
 
                 _context.Product.Add(product);

@@ -14,6 +14,8 @@ namespace Domain.Models
         [Required]
         public string Description { get; set; }
         [Required]
+        public double Price { get; set; }
+        [Required]
         public bool Paid { get; set; }
     }
 }

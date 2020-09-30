@@ -14,6 +14,12 @@ namespace Application.Commands.Product.Commands.CreateProduct
                 .NotNull()
                 .NotEmpty()
                 .MaximumLength(200);
+
+            RuleFor(v => v.Price)
+                .NotNull();
+
+            RuleFor(v => v.Paid)
+                .NotNull();
         }
     }
 }

@@ -91,3 +91,12 @@
     padding: 4.5px 8px;
     width: 40px;
   }
+
+  /*listButton*/
+  .material-icons.md-19 { 
+    font-size: 23px; 
+    display: inline-flex;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 2px 0px 1px 0px;
+  }

@@ -13,7 +13,7 @@
                     Datum<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
-                    {{product.datePurchased}}
+                    {{product.datePurchased.substring(0, 10) | date : "dd/MM/y"}}
                 </td>
             </ng-container>
 
@@ -26,21 +26,44 @@
                 </td>
             </ng-container>
 
-            <!--ng-container matColumnDef="Price">
+            <ng-container matColumnDef="Price">
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Kosten<i class="material-icons md-18">{{buttonTextLogTypes}}</i>
+                    Kosten<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
-                    {{product.Price}}
+                    € {{product.price}}
                 </td>
-            </ng-container-->
+            </ng-container>
 
             <ng-container matColumnDef="Paid">
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
                     Betaald?<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
-                    {{product.paid}}
+                    <div *ngIf="product.paid == false">
+                        <input type="checkbox" id="paidCheckbox" name="paidCheckbox">
+                    </div>
+                    <div *ngIf="product.paid == true">
+                        <input type="checkbox" id="paidCheckbox" name="paidCheckbox" checked>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell class="table_th" *matHeaderCellDef></th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    <i mat-button class="normalButton" 
+                       [matMenuTriggerFor]="menu" class="material-icons md-19">more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item type="button" [routerLink]="['/product-update', product.id]" routerLinkActive="active"
+                                [ngClass]="theme =='light'? 'updateButton-light' : 'updateButton-dark'">
+                                <i class="material-icons md-18">create</i> Update
+                        </button>
+                        <button mat-menu-item (click)="deleteProduct(product.id)" type="button">
+                                <i class="material-icons md-18">delete</i> Delete
+                        </button>
+                    </mat-menu>
                 </td>
             </ng-container>
     
