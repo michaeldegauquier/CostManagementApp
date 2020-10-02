@@ -1,1 +1,60 @@
-<p>product-create works!</p>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-product-create">Product aanmaken</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="productCreateForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Datum:</label>
+                    <input type="date" formControlName="datePurchased" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.datePurchased.errors }" />
+                    <div *ngIf="submitted && f.datePurchased.errors" class="invalid-feedback">
+                        <div *ngIf="f.datePurchased.errors.required">Dit veld is vereist</div>
+                        <div *ngIf="f.datePurchased.errors.pattern">Datum moet in een geldig formaat staan</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Beschrijving:</label>
+                    <textarea formControlName="description" class="form-control" rows="4" cols="60"
+                              [ngClass]="{ 'is-invalid': submitted && f.description.errors }" ></textarea>
+                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Dit veld is vereist</div>
+                        <div *ngIf="f.description.errors.maxlength">Dit veld mag niet meer dan 200 karakters bevatten</div>
+                        <div *ngIf="f.description.errors.noWhitespace">Dit veld is vereist</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Kost:</label>
+                    <input type="number" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                    <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                        <div *ngIf="f.price.errors.required">Dit veld is vereist</div>
+                        <div *ngIf="f.price.errors.min">De kost moet groter dan of gelijk zijn aan €0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Betaald?</label>
+                    <input type="checkbox" formControlName="paid" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="normalButton buttonColor" type="reset" (click)="onReset()">Cancel</button>
+            <button type="button" class="normalButton buttonColor" type="submit">Aanmaken</button>
+          </div>
+      </form>
+    </div>
+</ng-template>
+
+<button class="normalButton buttonColor" (click)="open(content)">
+    <i class="material-icons md-18">add</i>
+</button>

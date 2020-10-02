@@ -60,10 +60,12 @@
 
   .buttonColor {
     background-color: #0080e8;
+    color: white;
   }
 
   .buttonColor:hover {
     background-color: #005296;
+    color: white;
   }
 
   .material-icons.md-18 { 
@@ -92,7 +94,7 @@
     width: 40px;
   }
 
-  /*listButton*/
+  /*listButton icon*/
   .material-icons.md-19 { 
     font-size: 23px; 
     display: inline-flex;

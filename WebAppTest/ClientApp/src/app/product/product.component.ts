@@ -1,7 +1,8 @@
-import { ProductService } from './shared/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
+import { ProductService } from './shared/product.service';
+import { ProductUpdateComponent } from './product-update/product-update.component';
 
 @Component({
   selector: 'app-product',
@@ -9,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+
+  @ViewChild(ProductUpdateComponent, {static: false}) productUpdate: ProductUpdateComponent;
 
   public displayedColumns: string[] = ['DatePurchased', 'Description', 'Price', 'Paid', 'Actions'];
   public dataSource: MatTableDataSource<any[]>;
@@ -40,5 +43,4 @@ export class ProductComponent implements OnInit {
     const newDateString = day + '/' + month + '/' + year;
     return newDateString;
   }
-
 }
