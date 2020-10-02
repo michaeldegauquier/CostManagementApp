@@ -1,7 +1,9 @@
 <div>
     <ul>
         <li>
-            <app-product-create></app-product-create>
+            <button class="normalButton buttonColor" (click)="openProductCreateModal(product_create_modal)">
+                <i class="material-icons md-18">add</i>
+            </button>
         </li>
         <li><input type="text" class="inputFieldYear" placeholder="Jaar"/></li>
         <li><input type="text" class="inputFieldMonth" placeholder="Maand"/></li>
@@ -74,3 +76,8 @@
         </table>
     </div>
 </div>
+
+<!--ProductCreateComponent in Modal-->
+<ng-template #product_create_modal let-modal>
+    <app-product-create></app-product-create>
+</ng-template>

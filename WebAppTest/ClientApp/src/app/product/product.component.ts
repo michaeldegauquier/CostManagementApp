@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProductService } from './shared/product.service';
 import { ProductUpdateComponent } from './product-update/product-update.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-product',
@@ -18,7 +19,7 @@ export class ProductComponent implements OnInit {
 
   private products: any[];
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.getProductList();
@@ -42,5 +43,14 @@ export class ProductComponent implements OnInit {
 
     const newDateString = day + '/' + month + '/' + year;
     return newDateString;
+  }
+
+  // open and close modal 'product-create-modal'
+  openProductCreateModal(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'product-create-modal'}).result.then((result) => {
+      // this.onReset();
+    }, (reason) => {
+      // this.onReset();
+    });
   }
 }

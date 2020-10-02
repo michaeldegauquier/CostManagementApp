@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { noWhitespaceValidator } from '../shared/productHelper';
+import { Subscription } from 'rxjs';
 import { ProductService } from './../shared/product.service';
 import { ProductComponent } from '../product.component';
 
@@ -12,6 +13,7 @@ import { ProductComponent } from '../product.component';
 })
 export class ProductCreateComponent implements OnInit {
 
+  clickEventsubscription: Subscription;
   productCreateForm: FormGroup;
   submitted = false;
 
@@ -22,16 +24,7 @@ export class ProductCreateComponent implements OnInit {
     this.createForm();
   }
 
-  // open and close modal
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-product-create'}).result.then((result) => {
-      this.onReset();
-    }, (reason) => {
-      this.onReset();
-    });
-  }
-
-  // default Form
+  // Default Form
   createForm() {
     this.productCreateForm = this.formBuilder.group({
       // validates date format yyyy-mm-dd
@@ -51,7 +44,7 @@ export class ProductCreateComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
+    // Stop here if form is invalid
     if (this.productCreateForm.invalid) {
         return;
     }
@@ -71,7 +64,7 @@ export class ProductCreateComponent implements OnInit {
   // Reset the form
   onReset() {
     this.submitted = false;
-    this.modalService.dismissAll();
-    this.productCreateForm.reset();
+    this.modalService.dismissAll(); // Close all modals
+    this.productCreateForm.reset(); // Reset form
   }
 }
