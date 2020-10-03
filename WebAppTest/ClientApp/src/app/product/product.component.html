@@ -60,12 +60,11 @@
                        [matMenuTriggerFor]="menu" class="material-icons md-19">more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item type="button" [routerLink]="['/product-update', product.id]" routerLinkActive="active"
-                                [ngClass]="theme =='light'? 'updateButton-light' : 'updateButton-dark'">
-                                <i class="material-icons md-18">create</i> Update
+                        <button mat-menu-item type="button" class="updateButton" (click)="openProductUpdateModal(product_update_modal, product.id)">
+                                <i class="material-icons md-18">create</i> Aanpassen
                         </button>
-                        <button mat-menu-item (click)="deleteProduct(product.id)" type="button">
-                                <i class="material-icons md-18">delete</i> Delete
+                        <button mat-menu-item (click)="deleteProductById(product.id)" type="button" class="deleteButton">
+                                <i class="material-icons md-18">delete</i> Verwijder
                         </button>
                     </mat-menu>
                 </td>
@@ -80,4 +79,9 @@
 <!--ProductCreateComponent in Modal-->
 <ng-template #product_create_modal let-modal>
     <app-product-create></app-product-create>
+</ng-template>
+
+<!--ProductUpdateComponent in Modal-->
+<ng-template #product_update_modal let-modal>
+    <app-product-update></app-product-update>
 </ng-template>

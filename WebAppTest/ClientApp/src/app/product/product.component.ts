@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProductService } from './shared/product.service';
-import { ProductUpdateComponent } from './product-update/product-update.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -11,8 +10,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-
-  @ViewChild(ProductUpdateComponent, {static: false}) productUpdate: ProductUpdateComponent;
 
   public displayedColumns: string[] = ['DatePurchased', 'Description', 'Price', 'Paid', 'Actions'];
   public dataSource: MatTableDataSource<any[]>;
@@ -35,22 +32,31 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  // dd/MM/yyyy
-  transformDateToString(dateString: string) {
-    const day = dateString.substring(8, 10);
-    const month = dateString.substring(5, 7);
-    const year = dateString.substring(0, 4);
-
-    const newDateString = day + '/' + month + '/' + year;
-    return newDateString;
-  }
-
   // open and close modal 'product-create-modal'
   openProductCreateModal(content) {
     this.modalService.open(content, {ariaLabelledBy: 'product-create-modal'}).result.then((result) => {
       // this.onReset();
     }, (reason) => {
       // this.onReset();
+    });
+  }
+
+  // open and close modal 'product-update-modal'
+  openProductUpdateModal(content, productId: number) {
+    this.productService.sendProductId(productId);
+    this.modalService.open(content, {ariaLabelledBy: 'product-update-modal'}).result.then((result) => {
+      // this.onReset();
+    }, (reason) => {
+      // this.onReset();
+    });
+  }
+
+  deleteProductById(id: number) {
+    this.productService.deleteProduct(id.toString()).then((data: any[]) => {
+      this.getProductList();
+    })
+    .catch((error) => {
+      // if (error.status == 401) {}
     });
   }
 }

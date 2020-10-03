@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Product } from './product.model';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,19 @@ export class ProductService {
 
   readonly rootUrl = environment.rootUrl;
 
+  // Shared Message for consultant ID
+  private productId = new BehaviorSubject(0);
+
   constructor(private http: HttpClient) { }
+
+  // Pass productId to shared variable
+  sendProductId(id: number) {
+    this.productId.next(id);
+  }
+
+  getProductId() {
+    return this.productId.asObservable();
+  }
 
   async getAllProducts() {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});

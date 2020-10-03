@@ -13,3 +13,18 @@ export function noWhitespaceValidator(controlName: string) {
         }
     };
 }
+
+// It takes the forst 10 characters of a dateString -> yyyy-MM-dd
+export function dateSubstring_1_10(dateString: string) {
+    return dateString.substring(0, 10);
+}
+
+// dateSTring to format dd/MM/yyyy
+export function dateStringTo_dd_MM_yyyy(dateString: string) {
+    const day = dateString.substring(8, 10);
+    const month = dateString.substring(5, 7);
+    const year = dateString.substring(0, 4);
+
+    const newDateString = day + '/' + month + '/' + year;
+    return newDateString;
+}
