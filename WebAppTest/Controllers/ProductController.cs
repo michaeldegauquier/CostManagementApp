@@ -8,6 +8,7 @@ using Application.Commands.Product.Queries.GetProductById;
 using Application.Commands.Product.Commands.CreateProduct;
 using Application.Commands.Product.Commands.UpdateProduct;
 using Application.Commands.Product.Commands.DeleteProduct;
+using Application.Commands.Product.Queries.GetAllProductsByDate;
 
 namespace WebAppTest.Controllers
 {
@@ -29,6 +30,13 @@ namespace WebAppTest.Controllers
             return await _mediator.Send(new GetAllProductsQuery());
         }
 
+        // GET: api/Product/Date?year=2020&month=02&day=12
+        [HttpGet("Date")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDate(string year, string month, string day)
+        {
+            return await _mediator.Send(new GetAllProductsByDateQuery { Year = year, Month = month, Day = day });
+        }
+
         // GET: api/Product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(long id)
@@ -46,6 +54,20 @@ namespace WebAppTest.Controllers
         // PUT: api/Product/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(long id, UpdateProductCommand product)
+        {
+            if (id != product.Id)
+            {
+                return BadRequest();
+            }
+
+            await _mediator.Send(product);
+
+            return NoContent();
+        }
+
+        // PUT: api/Product/PropPaid/5 --> PropPaid = Property Paid Update
+        [HttpPut("PropPaid/{id}")]
+        public async Task<IActionResult> PutProductPropPaid(long id, UpdateProductPropPaidCommand product)
         {
             if (id != product.Id)
             {
