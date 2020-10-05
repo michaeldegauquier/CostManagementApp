@@ -28,3 +28,14 @@ export function dateStringTo_dd_MM_yyyy(dateString: string) {
     const newDateString = day + '/' + month + '/' + year;
     return newDateString;
 }
+
+// Transform dateString 'yyyy-MM-dd' to Date object
+export function dateStringToDate(dateString: string) {
+    const day = dateString.substring(8, 10);
+    const month = dateString.substring(5, 7);
+    const year = dateString.substring(0, 4);
+
+    const dateObject = new Date(`${year}-${month}-${day}`);
+
+    return dateObject;
+}

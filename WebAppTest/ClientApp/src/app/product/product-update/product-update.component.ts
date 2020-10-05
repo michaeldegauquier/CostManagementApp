@@ -81,7 +81,9 @@ export class ProductUpdateComponent implements OnInit {
     }
 
     this.productService.updateProduct(this.productUpdateForm.value, this.productId.toString()).then((data: any[]) => {
-      this.productComponent.ngOnInit();
+      this.productComponent.getProductList(this.productComponent.yearFilter,
+        this.productComponent.monthFilter,
+        this.productComponent.dayFilter);
     })
     .catch((error) => {
       if (error.status === 404) {

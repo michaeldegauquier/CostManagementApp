@@ -16,7 +16,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  // Pass productId to shared variable
+  // Pass productId to shared variable for UpdateProduct
   sendProductId(id: number) {
     this.productId.next(id);
   }
@@ -28,6 +28,11 @@ export class ProductService {
   async getAllProducts() {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return await this.http.get(this.rootUrl + '/Product', {headers: headers}).toPromise();
+  }
+
+  async getAllProductsByDate(year: string, month: string, day: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return await this.http.get(this.rootUrl + `/Product/Date?year=${year}&month=${month}&day=${day}`, {headers: headers}).toPromise();
   }
 
   async getProductById(id: string) {
@@ -43,6 +48,11 @@ export class ProductService {
   async updateProduct(formData: Product, id: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return await this.http.put(this.rootUrl + '/Product/' + id, formData, {headers: headers}).toPromise();
+  }
+
+  async updateProductPropPaid(formData: Product, id: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return await this.http.put(this.rootUrl + '/Product/PropPaid/' + id, formData, {headers: headers}).toPromise();
   }
 
   async deleteProduct(id: string) {

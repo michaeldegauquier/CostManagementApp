@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +21,9 @@ namespace Application.Commands.Product.Queries.GetAllProducts
 
             public async Task<List<Domain.Models.Product>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
             {
-                return await _context.Product.ToListAsync(cancellationToken);
+                return await _context.Product
+                    .OrderByDescending(x => x.DatePurchased)
+                    .ToListAsync(cancellationToken);
             }
         }
     }

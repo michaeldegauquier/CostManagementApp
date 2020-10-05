@@ -10,9 +10,9 @@ namespace Application.Commands.Product.Queries.GetAllProductsByDate
 {
     public class GetAllProductsByDateQuery : IRequest<List<Domain.Models.Product>>
     {
-        public string Year { get; set; }
-        public string Month { get; set; }
-        public string Day { get; set; }
+        public int? Year { get; set; }
+        public int? Month { get; set; }
+        public int? Day { get; set; }
 
 
         public class GetAllProductsByDateQueryHandler : IRequestHandler<GetAllProductsByDateQuery, List<Domain.Models.Product>>
@@ -31,20 +31,20 @@ namespace Application.Commands.Product.Queries.GetAllProductsByDate
 
                 if (request.Year != null)
                 {
-                    productListHelper = productListHelper.Where(x => x.DatePurchased.Year.ToString() == request.Year).ToList();
+                    productListHelper = productListHelper.Where(x => x.DatePurchased.Year == request.Year).ToList();
                 }
 
                 if (request.Month != null)
                 {
-                    productListHelper = productListHelper.Where(x => x.DatePurchased.Month.ToString() == request.Month).ToList();
+                    productListHelper = productListHelper.Where(x => x.DatePurchased.Month == request.Month).ToList();
                 }
 
                 if (request.Day != null)
                 {
-                    productListHelper = productListHelper.Where(x => x.DatePurchased.Day.ToString() == request.Day).ToList();
+                    productListHelper = productListHelper.Where(x => x.DatePurchased.Day == request.Day).ToList();
                 }
 
-                return productListHelper;
+                return productListHelper.OrderByDescending(x => x.DatePurchased).ToList();
             }
         }
     }

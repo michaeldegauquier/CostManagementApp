@@ -26,6 +26,12 @@
     vertical-align: middle;
   }
 
+  .table_tr:hover {
+    height: 1%;
+    vertical-align: middle;
+    background-color: #cff9ff;
+  }
+
   .table_th {
     height: 1%;
     padding-top: 10px;
@@ -100,22 +106,13 @@
     color: white;
   }
 
-  .inputFieldYear {
+  /*Inputs*/
+  .inputFieldYearMonth {
     margin-right: 5px;
-    padding: 4.5px 8px;
-    width: 55px;
-  }
-
-  .inputFieldMonth {
-    margin-right: 5px;
-    padding: 4.5px 8px;
-    width: 40px;
   }
 
   .inputFieldDay {
     margin-right: 5px;
-    padding: 4.5px 8px;
-    width: 40px;
   }
 
   /*listButton icon*/

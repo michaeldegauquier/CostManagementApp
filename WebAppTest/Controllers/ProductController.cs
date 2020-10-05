@@ -32,7 +32,7 @@ namespace WebAppTest.Controllers
 
         // GET: api/Product/Date?year=2020&month=02&day=12
         [HttpGet("Date")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDate(string year, string month, string day)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDate(int? year, int? month, int? day)
         {
             return await _mediator.Send(new GetAllProductsByDateQuery { Year = year, Month = month, Day = day });
         }

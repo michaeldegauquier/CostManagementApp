@@ -50,7 +50,9 @@ export class ProductCreateComponent implements OnInit {
     }
 
     this.productService.createProduct(this.productCreateForm.value).then((data: any[]) => {
-      this.productComponent.ngOnInit();
+      this.productComponent.getProductList(this.productComponent.yearFilter,
+        this.productComponent.monthFilter,
+        this.productComponent.dayFilter);
     })
     .catch((error) => {
       if (error.status === 404) {

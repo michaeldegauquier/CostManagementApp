@@ -5,9 +5,16 @@
                 <i class="material-icons md-18">add</i>
             </button>
         </li>
-        <li><input type="text" class="inputFieldYear" placeholder="Jaar"/></li>
-        <li><input type="text" class="inputFieldMonth" placeholder="Maand"/></li>
-        <li><input type="text" class="inputFieldDay" placeholder="Dag"/></li>
+        <li class="inputFieldDay">
+            <select class="form-control" (change)="selectDay($event)">
+                <option value="" disabled selected>Dag</option>
+                <option value="">--</option>
+                <option *ngFor="let x of amountDaysMonth" value="{{x}}">{{x}}</option>
+            </select>
+        </li>
+        <li class="inputFieldYearMonth">
+            <input type="month" onkeydown="return false" class="form-control" (change)="selectYearMonth($event)" value="{{defaultYearMonth}}"/>
+        </li>
     </ul>
 
     <div class="scrollable">
@@ -45,10 +52,10 @@
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     <div *ngIf="product.paid == false">
-                        <input type="checkbox" id="paidCheckbox" name="paidCheckbox">
+                        <input type="checkbox" id="paidCheckbox" name="paidCheckbox" (change)="updatePropPaid(product.id, $event)">
                     </div>
                     <div *ngIf="product.paid == true">
-                        <input type="checkbox" id="paidCheckbox" name="paidCheckbox" checked>
+                        <input type="checkbox" id="paidCheckbox" name="paidCheckbox" (change)="updatePropPaid(product.id, $event)" checked>
                     </div>
                 </td>
             </ng-container>
