@@ -14,6 +14,7 @@ export class ProductComponent implements OnInit {
 
   public displayedColumns: string[] = ['DatePurchased', 'Description', 'Price', 'Paid', 'Actions'];
   public dataSource: MatTableDataSource<any[]>;
+  private products: any[];
 
   // Default Date variables
   public dateToday = new Date();
@@ -24,28 +25,51 @@ export class ProductComponent implements OnInit {
   public yearFilter: string = this.dateToday.getFullYear().toString();
   public monthFilter: string = (this.dateToday.getMonth() + 1).toString();
   public dayFilter = '';
+  public searchFilter = '';
   public defaultYearMonth = `${this.yearFilter}-${Number(this.monthFilter) < 10 ? '0' + this.monthFilter : this.monthFilter}`;
+  public amountDaysMonth = Array.from({length: 31}, (_, i) => i + 1); // Days 1 - 31
+  public totalToPaid: string;
+  public totalPaid: string;
+  public totalPrice: string;
 
-  public amountDaysMonth = Array.from({length: 31}, (_, i) => i + 1);
-  private products: any[];
+  // Sort Column variables
+  public sortDateAsc = false;
+  public sortPriceAsc = false;
+  public sortPaidAsc = false;
 
   constructor(private productService: ProductService, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.getProductList(this.yearToday, this.monthToday, '');
+    this.getProductList(this.yearToday, this.monthToday, '', '');
   }
 
-  async getProductList(yearToday: string, monthToday: string, dayToday: string) {
-    this.productService.getAllProductsByDate(yearToday, monthToday, dayToday).then((data: any[]) => {
+  async getProductList(yearToday: string, monthToday: string, dayToday: string, description: string) {
+    this.productService.getAllProductsByDate(yearToday, monthToday, dayToday, description).then((data: any[]) => {
       this.products = data;
       this.dataSource = new MatTableDataSource<any[]>(this.products);
+      this.checkSorted();
+      this.totalToPaid = this.getTotalPrices(this.products)[0];
+      this.totalPaid = this.getTotalPrices(this.products)[1];
+      this.totalPrice = this.getTotalPrices(this.products)[2];
     })
     .catch((error) => {
       // if (error.status === 401) {}
     });
   }
 
-  selectYearMonth(ym: any) {
+  getTotalPrices(product: any) {
+    let totalToPaid = 0;
+    let totalPaid = 0;
+    let totalPrice = 0;
+    product.forEach(element => {
+      totalToPaid += element.paid === false ? element.price : 0.00;
+      totalPaid += element.paid === true ? element.price : 0.00;
+      totalPrice += element.price;
+    });
+    return [totalToPaid.toFixed(2), totalPaid.toFixed(2), totalPrice.toFixed(2)];
+  }
+
+  selectYearMonth(ym: any) { // ym = event
     if (ym.target.value.toString() !== '') {
       this.yearFilter = ym.target.value.toString().split('-')[0];
       this.monthFilter = ym.target.value.toString().split('-')[1];
@@ -53,12 +77,17 @@ export class ProductComponent implements OnInit {
       this.yearFilter = '';
       this.monthFilter = '';
     }
-    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter);
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
   }
 
-  selectDay(day: any) {
+  selectDay(day: any) { // day = event
     this.dayFilter = day.target.value.toString();
-    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter);
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
+  }
+
+  selectSearchBar(description: any) { // description = event
+    this.searchFilter = description.toString();
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
   }
 
   // open and close modal 'product-create-modal'
@@ -84,7 +113,7 @@ export class ProductComponent implements OnInit {
     const product: Product = { Id: productId, Paid: propPaid.target.checked };
 
     this.productService.updateProductPropPaid(product, productId.toString()).then((data: any[]) => {
-      // this.getProductList();
+      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
     })
     .catch((error) => {
       // if (error.status == 401) {}
@@ -93,10 +122,57 @@ export class ProductComponent implements OnInit {
 
   deleteProductById(productId: number) {
     this.productService.deleteProduct(productId.toString()).then((data: any[]) => {
-      this.getProductList(this.yearToday, this.monthToday, '');
+      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
     })
     .catch((error) => {
       // if (error.status == 401) {}
     });
+  }
+
+  // Sort Functions
+  sortOnDate() {
+    if (this.sortDateAsc === false) {
+      this.dataSource.data = this.products.sort((a, b) => a.datePurchased.localeCompare(b.datePurchased));
+      this.sortDateAsc = true;
+    } else {
+      this.dataSource.data = this.products.sort((a, b) => b.datePurchased.localeCompare(a.datePurchased));
+      this.sortDateAsc = false;
+    }
+    this.sortPaidAsc = false, this.sortPriceAsc = false;
+  }
+
+  sortOnPrice() {
+    if (this.sortPriceAsc === false) {
+      this.dataSource.data = this.products.sort((a, b) => a.price - b.price);
+      this.sortPriceAsc = true;
+    } else {
+      this.dataSource.data = this.products.sort((a, b) => b.price - a.price);
+      this.sortPriceAsc = false;
+    }
+    this.sortPaidAsc = false, this.sortDateAsc = false;
+  }
+
+  sortOnPaid() {
+    if (this.sortPaidAsc === false) {
+      this.dataSource.data = this.products.sort((a, b) => a.paid - b.paid);
+      this.sortPaidAsc = true;
+    } else {
+      this.dataSource.data = this.products.sort((a, b) => b.paid - a.paid);
+      this.sortPaidAsc = false;
+    }
+    this.sortDateAsc = false, this.sortPriceAsc = false;
+  }
+
+  checkSorted() {
+    if (this.sortPaidAsc === true) {
+      this.sortPaidAsc = false;
+      this.sortOnPaid();
+    } else if (this.sortPriceAsc === true) {
+      this.sortPriceAsc = false;
+      this.sortOnPrice();
+    } else if (this.sortDateAsc === true) {
+      this.sortDateAsc = false;
+      this.sortOnDate();
+    }
   }
 }

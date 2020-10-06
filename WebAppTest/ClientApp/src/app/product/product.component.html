@@ -15,13 +15,22 @@
         <li class="inputFieldYearMonth">
             <input type="month" onkeydown="return false" class="form-control" (change)="selectYearMonth($event)" value="{{defaultYearMonth}}"/>
         </li>
+
+        <li class="inputFieldSearch">
+            <div class="container-search">
+                <input type="search" [(ngModel)]="searchFilter" class="form-control searchBar" placeholder="Zoek..."/>
+                <button class="searchButton buttonColor" (click)="selectSearchBar(searchFilter)">
+                    <i class="material-icons md-18">search</i>
+                </button>
+            </div>      
+        </li>
     </ul>
 
     <div class="scrollable">
         <table mat-table class="table table-striped" [dataSource]="dataSource">
             <ng-container matColumnDef="DatePurchased">
-                <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Datum<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                <th mat-header-cell class="table_th" *matHeaderCellDef (click)="sortOnDate()">
+                    Datum<i class="material-icons md-20">{{sortDateAsc == true? 'expand_more' : 'expand_less'}}</i>
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     {{product.datePurchased.substring(0, 10) | date : "dd/MM/y"}}
@@ -30,7 +39,7 @@
 
             <ng-container matColumnDef="Description">
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Beschrijving<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                    Beschrijving
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     {{product.description}}
@@ -38,8 +47,8 @@
             </ng-container>
 
             <ng-container matColumnDef="Price">
-                <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Kosten<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                <th mat-header-cell class="table_th" *matHeaderCellDef (click)="sortOnPrice()">
+                    Kosten<i class="material-icons md-20">{{sortPriceAsc == true? 'expand_more' : 'expand_less'}}</i>
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     € {{product.price}}
@@ -47,8 +56,8 @@
             </ng-container>
 
             <ng-container matColumnDef="Paid">
-                <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Betaald?<!--i class="material-icons md-18">{{buttonTextLogTypes}}</i-->
+                <th mat-header-cell class="table_th" *matHeaderCellDef (click)="sortOnPaid()">
+                    Betaald?<i class="material-icons md-20">{{sortPaidAsc == true? 'expand_more' : 'expand_less'}}</i>
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     <div *ngIf="product.paid == false">
@@ -71,7 +80,7 @@
                                 <i class="material-icons md-18">create</i> Aanpassen
                         </button>
                         <button mat-menu-item (click)="deleteProductById(product.id)" type="button" class="deleteButton">
-                                <i class="material-icons md-18">delete</i> Verwijder
+                                <i class="material-icons md-18">delete</i> Verwijderen
                         </button>
                     </mat-menu>
                 </td>
@@ -79,8 +88,24 @@
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table_tr"></tr>
+            
         </table>
     </div>
+
+    <hr/>
+
+    <table style="width: 40%; float: right; text-align: center;">
+        <tr>
+          <th>Nog te betalen</th>
+          <th>Betaald</th>
+          <th>Totale kosten</th>
+        </tr>
+        <tr>
+          <td style="color: red;">€ {{totalToPaid}}</td>
+          <td style="color: rgb(0, 180, 0);">€ {{totalPaid}}</td>
+          <td>€ {{totalPrice}}</td>
+        </tr>
+      </table>
 </div>
 
 <!--ProductCreateComponent in Modal-->

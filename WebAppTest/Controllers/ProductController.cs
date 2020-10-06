@@ -30,11 +30,11 @@ namespace WebAppTest.Controllers
             return await _mediator.Send(new GetAllProductsQuery());
         }
 
-        // GET: api/Product/Date?year=2020&month=02&day=12
+        // GET: api/Product/Date?year=2020&month=02&day=12&desc=test
         [HttpGet("Date")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDate(int? year, int? month, int? day)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDate(int? year, int? month, int? day, string desc)
         {
-            return await _mediator.Send(new GetAllProductsByDateQuery { Year = year, Month = month, Day = day });
+            return await _mediator.Send(new GetAllProductsByDateQuery { Year = year, Month = month, Day = day, Description = desc });
         }
 
         // GET: api/Product/5

@@ -21,6 +21,12 @@
   }
 
   /*Table*/
+  .scrollable {
+    overflow-y: auto;
+    height: auto;
+    max-height: 500px;
+  }
+
   .table_tr {
     height: 1%;
     vertical-align: middle;
@@ -106,6 +112,15 @@
     color: white;
   }
 
+  /*Icon sorting*/
+  .material-icons.md-20 { 
+    font-size: 24px; 
+    display: inline-flex;
+    vertical-align: middle;
+    cursor: pointer;
+    color: black;
+  }
+
   /*Inputs*/
   .inputFieldYearMonth {
     margin-right: 5px;
@@ -115,6 +130,30 @@
     margin-right: 5px;
   }
 
+  .inputFieldSearch {
+    float: right;  
+  }
+
+  .container-search {
+    display: flex;
+  }
+
+  .searchBar {
+    border-radius: 6px 0px 0px 6px;
+  }
+
+  .searchButton {
+    border: none;
+    padding: 6px 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 100%;
+    margin-right: 5px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 0px 6px 6px 0px;
+  }
+
   /*listButton icon*/
   .material-icons.md-19 { 
     font-size: 23px; 
@@ -122,4 +161,22 @@
     vertical-align: middle;
     cursor: pointer;
     padding: 2px 0px 1px 0px;
+  }
+
+  /*Scrollbar*/
+  ::-webkit-scrollbar {   /*width*/
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {  /*Track*/
+    background: #f1f1f1; 
+  }
+  
+  ::-webkit-scrollbar-thumb {  /*Handle*/
+    background: #b3b3b3;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {  /*Handle on hover*/
+    background: #7c7c7c; 
   }

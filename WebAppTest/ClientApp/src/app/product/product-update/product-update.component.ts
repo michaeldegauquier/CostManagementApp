@@ -35,7 +35,7 @@ export class ProductUpdateComponent implements OnInit {
       // validates date format yyyy-mm-dd
       datePurchased: ['', [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
-      price: [null, [Validators.required, Validators.min(0)]],
+      price: [null, [Validators.required, Validators.min(0), Validators.pattern(/^-?\d*(?:[.,]\d{1,2})?$/)]],
       paid: [false, Validators.required]
     }, {
       validator: noWhitespaceValidator('description')
@@ -50,7 +50,7 @@ export class ProductUpdateComponent implements OnInit {
       datePurchased: [dateSubstring_1_10(this.product.datePurchased), [Validators.required,
                                      Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
       description: [this.product.description, [Validators.required, Validators.maxLength(200)]],
-      price: [this.product.price, [Validators.required, Validators.min(0)]],
+      price: [this.product.price, [Validators.required, Validators.min(0), Validators.pattern(/^-?\d*(?:[.,]\d{1,2})?$/)]],
       paid: [this.product.paid, Validators.required]
     }, {
       validator: noWhitespaceValidator('description')
@@ -83,7 +83,8 @@ export class ProductUpdateComponent implements OnInit {
     this.productService.updateProduct(this.productUpdateForm.value, this.productId.toString()).then((data: any[]) => {
       this.productComponent.getProductList(this.productComponent.yearFilter,
         this.productComponent.monthFilter,
-        this.productComponent.dayFilter);
+        this.productComponent.dayFilter,
+        this.productComponent.searchFilter);
     })
     .catch((error) => {
       if (error.status === 404) {

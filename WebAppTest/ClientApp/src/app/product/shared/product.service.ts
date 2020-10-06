@@ -30,9 +30,10 @@ export class ProductService {
     return await this.http.get(this.rootUrl + '/Product', {headers: headers}).toPromise();
   }
 
-  async getAllProductsByDate(year: string, month: string, day: string) {
+  async getAllProductsByDate(year: string, month: string, day: string, desc: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return await this.http.get(this.rootUrl + `/Product/Date?year=${year}&month=${month}&day=${day}`, {headers: headers}).toPromise();
+    return await this.http.get(this.rootUrl +
+      `/Product/Date?year=${year}&month=${month}&day=${day}&desc=${desc}`, {headers: headers}).toPromise();
   }
 
   async getProductById(id: string) {

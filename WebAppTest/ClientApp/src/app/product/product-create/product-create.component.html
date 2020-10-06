@@ -37,6 +37,7 @@
                     <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
                         <div *ngIf="f.price.errors.required">Dit veld is vereist</div>
                         <div *ngIf="f.price.errors.min">De kost moet groter dan of gelijk zijn aan €0</div>
+                        <div *ngIf="f.price.errors.pattern">Maximum 2 cijfers na de komma</div>
                     </div>
                 </div>
             </div>
