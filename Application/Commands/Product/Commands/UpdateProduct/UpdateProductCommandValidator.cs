@@ -20,6 +20,10 @@ namespace Application.Commands.Product.Commands.UpdateProduct
 
             RuleFor(v => v.Paid)
                 .NotNull();
+
+            RuleFor(v => v.CategoryId)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

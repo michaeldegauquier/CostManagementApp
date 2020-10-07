@@ -20,6 +20,10 @@ namespace Application.Commands.Product.Commands.CreateProduct
 
             RuleFor(v => v.Paid)
                 .NotNull();
+
+            RuleFor(v => v.CategoryId)
+                .NotEmpty()
+                .NotNull();
         }
     }
 }

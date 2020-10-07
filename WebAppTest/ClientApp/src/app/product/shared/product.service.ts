@@ -11,7 +11,7 @@ export class ProductService {
 
   readonly rootUrl = environment.rootUrl;
 
-  // Shared Message for consultant ID
+  // Shared Message for product ID
   private productId = new BehaviorSubject(0);
 
   constructor(private http: HttpClient) { }
@@ -30,10 +30,10 @@ export class ProductService {
     return await this.http.get(this.rootUrl + '/Product', {headers: headers}).toPromise();
   }
 
-  async getAllProductsByDate(year: string, month: string, day: string, desc: string) {
+  async getAllProductsByFilter(year: string, month: string, day: string, desc: string, catg: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return await this.http.get(this.rootUrl +
-      `/Product/Date?year=${year}&month=${month}&day=${day}&desc=${desc}`, {headers: headers}).toPromise();
+      `/Product/Filter?year=${year}&month=${month}&day=${day}&desc=${desc}&catg=${catg}`, {headers: headers}).toPromise();
   }
 
   async getProductById(id: string) {

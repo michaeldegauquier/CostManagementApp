@@ -19,6 +19,9 @@ import { CounterComponent } from './counter/counter.component';
 import { ProductComponent } from './product/product.component';
 import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
+import { CategoryComponent } from './category/category.component';
+import { CategoryCreateComponent } from './category/category-create/category-create.component';
+import { CategoryUpdateComponent } from './category/category-update/category-update.component';
 
 
 @NgModule({
@@ -28,7 +31,10 @@ import { ProductUpdateComponent } from './product/product-update/product-update.
     CounterComponent,
     ProductComponent,
     ProductCreateComponent,
-    ProductUpdateComponent
+    ProductUpdateComponent,
+    CategoryComponent,
+    CategoryCreateComponent,
+    CategoryUpdateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

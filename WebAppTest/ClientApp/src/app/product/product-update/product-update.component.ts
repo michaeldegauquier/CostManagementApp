@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dateSubstring_1_10, noWhitespaceValidator } from '../shared/productHelper';
 import { Subscription } from 'rxjs';
 import { ProductService } from './../shared/product.service';
+import { CategoryService } from './../../category/shared/category.service';
 import { ProductComponent } from '../product.component';
 
 @Component({
@@ -13,19 +14,30 @@ import { ProductComponent } from '../product.component';
 })
 export class ProductUpdateComponent implements OnInit {
 
-  product: any;
+  public categories: any[];
+  public product: any;
   productId: number;
   clickEventsubscription: Subscription;
   productUpdateForm: FormGroup;
   submitted = false;
 
-  constructor(private productComponent: ProductComponent, private modalService: NgbModal,
-              private formBuilder: FormBuilder, private productService: ProductService) { }
+  constructor(private productComponent: ProductComponent, private modalService: NgbModal, private formBuilder: FormBuilder,
+              private productService: ProductService, private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.productService.getProductId().subscribe(id => this.productId = id);
+    this.getCategoryList();
     this.createForm(); // Always creates the default Form
     this.getProductById(this.productId);
+  }
+
+  async getCategoryList() {
+    this.categoryService.getAllCategories().then((data: any[]) => {
+      this.categories = data;
+    })
+    .catch((error) => {
+      // if (error.status === 401) {}
+    });
   }
 
   // Default Form
@@ -34,6 +46,7 @@ export class ProductUpdateComponent implements OnInit {
       Id: [0],
       // validates date format yyyy-mm-dd
       datePurchased: ['', [Validators.required, Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
+      categoryId: [null, [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
       price: [null, [Validators.required, Validators.min(0), Validators.pattern(/^-?\d*(?:[.,]\d{1,2})?$/)]],
       paid: [false, Validators.required]
@@ -49,6 +62,7 @@ export class ProductUpdateComponent implements OnInit {
       // validates date format yyyy-mm-dd
       datePurchased: [dateSubstring_1_10(this.product.datePurchased), [Validators.required,
                                      Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]],
+      categoryId: [this.product.category.id, [Validators.required]],
       description: [this.product.description, [Validators.required, Validators.maxLength(200)]],
       price: [this.product.price, [Validators.required, Validators.min(0), Validators.pattern(/^-?\d*(?:[.,]\d{1,2})?$/)]],
       paid: [this.product.paid, Validators.required]
@@ -60,7 +74,6 @@ export class ProductUpdateComponent implements OnInit {
   async getProductById(id: number) {
     this.productService.getProductById(id.toString()).then((data: any[]) => {
       this.product = data;
-      console.log(data);
       this.updateForm();
     })
     .catch((error) => {
@@ -80,11 +93,14 @@ export class ProductUpdateComponent implements OnInit {
         return;
     }
 
+    // convert categoryId (string) to number
+    this.productUpdateForm.value.categoryId = Number(this.productUpdateForm.value.categoryId);
     this.productService.updateProduct(this.productUpdateForm.value, this.productId.toString()).then((data: any[]) => {
       this.productComponent.getProductList(this.productComponent.yearFilter,
         this.productComponent.monthFilter,
         this.productComponent.dayFilter,
-        this.productComponent.searchFilter);
+        this.productComponent.descFilter,
+        this.productComponent.catgFilter);
     })
     .catch((error) => {
       if (error.status === 404) {

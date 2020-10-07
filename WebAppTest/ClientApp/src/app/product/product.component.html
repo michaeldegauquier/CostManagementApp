@@ -7,8 +7,7 @@
         </li>
         <li class="inputFieldDay">
             <select class="form-control" (change)="selectDay($event)">
-                <option value="" disabled selected>Dag</option>
-                <option value="">--</option>
+                <option value="" selected>--Dag--</option>
                 <option *ngFor="let x of amountDaysMonth" value="{{x}}">{{x}}</option>
             </select>
         </li>
@@ -18,11 +17,18 @@
 
         <li class="inputFieldSearch">
             <div class="container-search">
-                <input type="search" [(ngModel)]="searchFilter" class="form-control searchBar" placeholder="Zoek..."/>
-                <button class="searchButton buttonColor" (click)="selectSearchBar(searchFilter)">
+                <input type="search" [(ngModel)]="descFilter" class="form-control searchBar" placeholder="Zoek..."/>
+                <button class="searchButton buttonColor" (click)="selectSearchBar(descFilter)">
                     <i class="material-icons md-18">search</i>
                 </button>
             </div>      
+        </li>
+
+        <li class="inputFieldCategory">
+            <select class="form-control" (change)="selectCategoryFilter($event)">
+                <option value="" selected>--Categorie--</option>
+                <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+            </select>
         </li>
     </ul>
 
@@ -34,6 +40,15 @@
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     {{product.datePurchased.substring(0, 10) | date : "dd/MM/y"}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Category">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Categorie
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    {{product.category.name}}
                 </td>
             </ng-container>
 

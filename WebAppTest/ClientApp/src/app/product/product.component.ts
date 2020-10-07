@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProductService } from './shared/product.service';
+import { CategoryService } from './../category/shared/category.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Product } from './shared/product.model';
 
@@ -12,9 +13,10 @@ import { Product } from './shared/product.model';
 })
 export class ProductComponent implements OnInit {
 
-  public displayedColumns: string[] = ['DatePurchased', 'Description', 'Price', 'Paid', 'Actions'];
+  public displayedColumns: string[] = ['DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
   public dataSource: MatTableDataSource<any[]>;
   private products: any[];
+  public categories: any[];
 
   // Default Date variables
   public dateToday = new Date();
@@ -25,7 +27,8 @@ export class ProductComponent implements OnInit {
   public yearFilter: string = this.dateToday.getFullYear().toString();
   public monthFilter: string = (this.dateToday.getMonth() + 1).toString();
   public dayFilter = '';
-  public searchFilter = '';
+  public descFilter = '';
+  public catgFilter = '';
   public defaultYearMonth = `${this.yearFilter}-${Number(this.monthFilter) < 10 ? '0' + this.monthFilter : this.monthFilter}`;
   public amountDaysMonth = Array.from({length: 31}, (_, i) => i + 1); // Days 1 - 31
   public totalToPaid: string;
@@ -37,20 +40,31 @@ export class ProductComponent implements OnInit {
   public sortPriceAsc = false;
   public sortPaidAsc = false;
 
-  constructor(private productService: ProductService, private router: Router, private modalService: NgbModal) { }
+  constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.getProductList(this.yearToday, this.monthToday, '', '');
+    this.getProductList(this.yearToday, this.monthToday, '', '', '');
+    this.getCategoryList();
   }
 
-  async getProductList(yearToday: string, monthToday: string, dayToday: string, description: string) {
-    this.productService.getAllProductsByDate(yearToday, monthToday, dayToday, description).then((data: any[]) => {
+  async getProductList(yearToday: string, monthToday: string, dayToday: string, description: string, category: string) {
+    this.productService.getAllProductsByFilter(yearToday, monthToday, dayToday, description, category).then((data: any[]) => {
       this.products = data;
       this.dataSource = new MatTableDataSource<any[]>(this.products);
       this.checkSorted();
       this.totalToPaid = this.getTotalPrices(this.products)[0];
       this.totalPaid = this.getTotalPrices(this.products)[1];
       this.totalPrice = this.getTotalPrices(this.products)[2];
+    })
+    .catch((error) => {
+      // if (error.status === 401) {}
+    });
+  }
+
+  async getCategoryList() {
+    this.categoryService.getAllCategories().then((data: any[]) => {
+      this.categories = data;
     })
     .catch((error) => {
       // if (error.status === 401) {}
@@ -77,17 +91,22 @@ export class ProductComponent implements OnInit {
       this.yearFilter = '';
       this.monthFilter = '';
     }
-    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
   }
 
   selectDay(day: any) { // day = event
     this.dayFilter = day.target.value.toString();
-    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
   }
 
-  selectSearchBar(description: any) { // description = event
-    this.searchFilter = description.toString();
-    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
+  selectCategoryFilter(category: any) { // category = event
+    this.catgFilter = category.target.value.toString();
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
+  }
+
+  selectSearchBar(description: any) { // description = ngModel
+    this.descFilter = description.toString();
+    this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
   }
 
   // open and close modal 'product-create-modal'
@@ -113,7 +132,7 @@ export class ProductComponent implements OnInit {
     const product: Product = { Id: productId, Paid: propPaid.target.checked };
 
     this.productService.updateProductPropPaid(product, productId.toString()).then((data: any[]) => {
-      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
+      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
     })
     .catch((error) => {
       // if (error.status == 401) {}
@@ -122,7 +141,7 @@ export class ProductComponent implements OnInit {
 
   deleteProductById(productId: number) {
     this.productService.deleteProduct(productId.toString()).then((data: any[]) => {
-      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.searchFilter);
+      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
     })
     .catch((error) => {
       // if (error.status == 401) {}

@@ -17,5 +17,9 @@ namespace Domain.Models
         public double Price { get; set; }
         [Required]
         public bool Paid { get; set; }
+
+        //Category
+        public long? CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

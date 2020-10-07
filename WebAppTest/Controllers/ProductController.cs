@@ -8,7 +8,7 @@ using Application.Commands.Product.Queries.GetProductById;
 using Application.Commands.Product.Commands.CreateProduct;
 using Application.Commands.Product.Commands.UpdateProduct;
 using Application.Commands.Product.Commands.DeleteProduct;
-using Application.Commands.Product.Queries.GetAllProductsByDate;
+using Application.Commands.Product.Queries.GetAllProductsByFilter;
 
 namespace WebAppTest.Controllers
 {
@@ -30,11 +30,11 @@ namespace WebAppTest.Controllers
             return await _mediator.Send(new GetAllProductsQuery());
         }
 
-        // GET: api/Product/Date?year=2020&month=02&day=12&desc=test
-        [HttpGet("Date")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByDate(int? year, int? month, int? day, string desc)
+        // GET: api/Product/Filter?year=2020&month=02&day=12&desc=test&catg=test
+        [HttpGet("Filter")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByFilter(int? year, int? month, int? day, string desc, string catg)
         {
-            return await _mediator.Send(new GetAllProductsByDateQuery { Year = year, Month = month, Day = day, Description = desc });
+            return await _mediator.Send(new GetAllProductsByFilterQuery { Year = year, Month = month, Day = day, Description = desc, Category = catg });
         }
 
         // GET: api/Product/5

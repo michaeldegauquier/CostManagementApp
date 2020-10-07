@@ -22,6 +22,7 @@ namespace Application.Commands.Product.Queries.GetAllProducts
             public async Task<List<Domain.Models.Product>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
             {
                 return await _context.Product
+                    .Include(x => x.Category)
                     .OrderByDescending(x => x.DatePurchased)
                     .ToListAsync(cancellationToken);
             }

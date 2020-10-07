@@ -20,8 +20,19 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
+                    <label>Categorie:</label>
+                    <select class="form-control" formControlName="categoryId" [ngClass]="{ 'is-invalid': submitted && f.categoryId.errors }">
+                        <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
+                        <div *ngIf="f.categoryId.errors.required">Dit veld is vereist</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
                     <label>Beschrijving:</label>
-                    <textarea formControlName="description" class="form-control" rows="4" cols="60"
+                    <textarea formControlName="description" class="form-control" rows="3" cols="60"
                               [ngClass]="{ 'is-invalid': submitted && f.description.errors }" ></textarea>
                     <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
                         <div *ngIf="f.description.errors.required">Dit veld is vereist</div>
@@ -31,7 +42,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group">
+                <div class="form-group col">
                     <label>Kost:</label>
                     <input type="number" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
                     <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
@@ -40,11 +51,9 @@
                         <div *ngIf="f.price.errors.pattern">Maximum 2 cijfers na de komma</div>
                     </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
+                <div class="form-group col">
                     <label>Betaald?</label>
-                    <input type="checkbox" formControlName="paid" class="form-control" />
+                    <input type="checkbox" formControlName="paid" class="form-control" style="width: 40px;" />
                 </div>
             </div>
         </div>

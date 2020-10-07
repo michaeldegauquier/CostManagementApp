@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +21,9 @@ namespace Application.Commands.Product.Queries.GetProductById
             
             public async Task<Domain.Models.Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
             {
-                return await _context.Product.FindAsync(request.Id);
+                return await _context.Product
+                    .Include(x => x.Category)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
             }
         }
     }

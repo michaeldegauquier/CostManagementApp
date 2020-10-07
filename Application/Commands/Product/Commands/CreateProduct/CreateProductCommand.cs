@@ -12,6 +12,7 @@ namespace Application.Commands.Product.Commands.CreateProduct
         public string Description { get; set; }
         public double Price { get; set; }
         public bool Paid { get; set; }
+        public long CategoryId { get; set; }
 
         public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, long>
         {
@@ -29,6 +30,7 @@ namespace Application.Commands.Product.Commands.CreateProduct
                 product.Description = request.Description.Trim();
                 product.Price = request.Price;
                 product.Paid = request.Paid;
+                product.CategoryId = request.CategoryId;
 
                 _context.Product.Add(product);
                 await _context.SaveChangesAsync(cancellationToken);

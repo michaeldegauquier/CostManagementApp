@@ -14,6 +14,7 @@ namespace Application.Commands.Product.Commands.UpdateProduct
         public string Description { get; set; }
         public double Price { get; set; }
         public bool Paid { get; set; }
+        public long CategoryId { get; set; }
 
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
         {
@@ -37,6 +38,7 @@ namespace Application.Commands.Product.Commands.UpdateProduct
                 product.Description = request.Description.Trim();
                 product.Price = request.Price;
                 product.Paid = request.Paid;
+                product.CategoryId = request.CategoryId;
 
                 await _context.SaveChangesAsync(cancellationToken);
 
