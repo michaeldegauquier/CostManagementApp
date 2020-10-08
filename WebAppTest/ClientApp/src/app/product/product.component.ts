@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   public yearToday = this.dateToday.getFullYear().toString();
   public monthToday = (this.dateToday.getMonth() + 1).toString();
 
-  // Filter Date variables
+  // Filter variables
   public yearFilter: string = this.dateToday.getFullYear().toString();
   public monthFilter: string = (this.dateToday.getMonth() + 1).toString();
   public dayFilter = '';

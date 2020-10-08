@@ -26,18 +26,17 @@ namespace Application.Commands.Category.Commands.UpdateCategory
             {
                 var categoryList = await _context.Category.ToListAsync();
                 var category = await _context.Category.FindAsync(request.Id);
+                category.Name = request.Name.Trim();
 
                 if (category == null)
                 {
                     throw new NotFoundException(nameof(Category), request.Id);
                 }
 
-                if (categoryList.Exists(x => x.Name.ToLower().Trim() == request.Name.ToLower().Trim() && x.Id != request.Id))
+                if (categoryList.Exists(x => x.Name.ToLower().Trim() == category.Name.ToLower().Trim() && x.Id != request.Id))
                 {
                     throw new ArgumentException("Already Exists", nameof(request.Name));
                 }
-
-                category.Name = request.Name.Trim();
 
                 await _context.SaveChangesAsync(cancellationToken);
 

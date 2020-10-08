@@ -5,6 +5,11 @@ export function noWhitespaceValidator(controlName: string) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
 
+        if (control.errors && !control.errors.noWhitespace) {
+            // return if another validator has already found an error on the control
+            return;
+        }
+
         // set error on control if validation fails
         if ((control.value || '').trim().length === 0) {
             control.setErrors({ noWhitespace: true });

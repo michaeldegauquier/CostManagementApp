@@ -1,1 +1,69 @@
-<p>category works!</p>
+<div>
+    <ul>
+        <li>
+            <button class="normalButton buttonColor" (click)="openCategoryCreateModal(category_create_modal)">
+                <i class="material-icons md-18">add</i>
+            </button>
+        </li>
+    </ul>
+
+    <div class="scrollable">
+        <table mat-table class="table table-striped" [dataSource]="dataSource">
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Categorie
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let category">
+                    {{category.name}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell class="table_th" *matHeaderCellDef></th>
+                <td mat-cell class="table_td" *matCellDef="let category">
+                    <i mat-button class="normalButton" 
+                       [matMenuTriggerFor]="menu" class="material-icons md-19">more_vert
+                    </i>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item type="button" class="updateButton" (click)="openCategoryUpdateModal(category_update_modal, category.id)">
+                                <i class="material-icons md-18">create</i> Aanpassen
+                        </button>
+                        <button mat-menu-item (click)="deleteCategoryById(category.id, category_delete_modal)" type="button" class="deleteButton">
+                                <i class="material-icons md-18">delete</i> Verwijderen
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table_tr"></tr>
+            
+        </table>
+    </div>
+</div>
+
+<!--CategoryCreateComponent in Modal-->
+<ng-template #category_create_modal let-modal>
+    <app-category-create></app-category-create>
+</ng-template>
+
+<!--CategoryUpdateComponent in Modal-->
+<ng-template #category_update_modal let-modal>
+    <app-category-update></app-category-update>
+</ng-template>
+
+<!--CategoryDelete in Modal-->
+<ng-template #category_delete_modal let-modal>
+    <div class="modal-header" style="background-color: red; color: white;">
+        <h4 class="modal-title">Verwijderen niet mogelijk!</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Deze categorie kan niet worden verwijderd omdat het gebruikt wordt in een product.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="normalButton deleteButton" (click)="closeModal()">Sluiten</button>
+      </div>
+</ng-template>

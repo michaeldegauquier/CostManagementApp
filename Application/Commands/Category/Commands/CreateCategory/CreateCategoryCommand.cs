@@ -9,7 +9,7 @@ namespace Application.Commands.Category.Commands.CreateCategory
 {
     public class CreateCategoryCommand : IRequest<long>
     {
-        public string Name;
+        public string Name { get; set; }
 
         public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, long>
         {
@@ -22,15 +22,15 @@ namespace Application.Commands.Category.Commands.CreateCategory
 
             public async Task<long> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
+                var category = new Domain.Models.Category();
+                category.Name = request.Name.Trim();
+
                 var categoryList = await _context.Category.ToListAsync();
 
-                if (categoryList.Exists(x => x.Name.ToLower().Trim() == request.Name.ToLower().Trim()))
+                if (categoryList.Exists(x => x.Name.ToLower().Trim() == category.Name.ToLower().Trim()))
                 {
                     throw new ArgumentException("Already Exists", nameof(request.Name));
                 }
-
-                var category = new Domain.Models.Category();
-                category.Name = request.Name.Trim();
 
                 _context.Category.Add(category);
                 await _context.SaveChangesAsync(cancellationToken);
