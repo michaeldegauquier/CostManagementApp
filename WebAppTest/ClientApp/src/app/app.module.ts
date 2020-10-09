@@ -22,6 +22,7 @@ import { ProductUpdateComponent } from './product/product-update/product-update.
 import { CategoryComponent } from './category/category.component';
 import { CategoryCreateComponent } from './category/category-create/category-create.component';
 import { CategoryUpdateComponent } from './category/category-update/category-update.component';
+import { OverviewPricesComponent } from './overview-prices/overview-prices.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { CategoryUpdateComponent } from './category/category-update/category-upd
     ProductUpdateComponent,
     CategoryComponent,
     CategoryCreateComponent,
-    CategoryUpdateComponent
+    CategoryUpdateComponent,
+    OverviewPricesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

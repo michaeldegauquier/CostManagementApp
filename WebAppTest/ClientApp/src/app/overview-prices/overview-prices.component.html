@@ -1,0 +1,65 @@
+<div>
+    <ul>
+        <li class="inputFieldCategory">
+            <select class="form-control" (change)="selectCategory($event)">
+                <option value="" selected>--Categorie--</option>
+                <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+            </select>
+        </li>
+
+        <li class="inputFieldYearMonth">
+            <input type="number" class="form-control" (click)="selectYear($event)" (change)="selectYear($event)" 
+                    value="{{defaultYear}}" placeholder="Jaar"/>
+        </li>
+
+        <li>
+            <button class="normalButton buttonColor" (click)="searchButton()">
+                <i class="material-icons md-18">search</i>
+            </button>
+        </li>
+    </ul>
+
+    <div class="scrollable">
+        <table mat-table class="table table-striped" [dataSource]="dataSource">
+            <ng-container matColumnDef="Month">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Maand
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="width: 40%; padding-top: 5px; padding-bottom: 5px;">
+                    {{translateMonthNumber(overviewPrice.month) + ' ' + year}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Price">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Totale Kost
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let overviewPrice">
+                    € {{overviewPrice.price.toFixed(2)}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="PricePaid">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Betaalde kost
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="color: rgb(0, 180, 0);">
+                    € {{overviewPrice.pricePaid.toFixed(2)}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="PriceToPaid">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                    Nog te betalen kost
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="color: red;">
+                    € {{overviewPrice.priceToPaid.toFixed(2)}}
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table_tr"></tr>
+            
+        </table>
+    </div>
+</div>

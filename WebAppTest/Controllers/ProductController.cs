@@ -9,6 +9,7 @@ using Application.Commands.Product.Commands.CreateProduct;
 using Application.Commands.Product.Commands.UpdateProduct;
 using Application.Commands.Product.Commands.DeleteProduct;
 using Application.Commands.Product.Queries.GetAllProductsByFilter;
+using Application.Commands.Product.Queries.GetOverviewProductPrices;
 
 namespace WebAppTest.Controllers
 {
@@ -35,6 +36,13 @@ namespace WebAppTest.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByFilter(int? year, int? month, int? day, string desc, string catg)
         {
             return await _mediator.Send(new GetAllProductsByFilterQuery { Year = year, Month = month, Day = day, Description = desc, Category = catg });
+        }
+
+        // GET: api/Product/OverviewPricesProducts/Filter?year=2020&catg=test
+        [HttpGet("OverviewPricesProducts/Filter")]
+        public async Task<ActionResult<IEnumerable<OverviewPricesProduct>>> GetOverviewPriceProductsByFilter(int? year, string catg)
+        {
+            return await _mediator.Send(new GetOverviewProductPricesQuery { Year = year, Category = catg });
         }
 
         // GET: api/Product/5

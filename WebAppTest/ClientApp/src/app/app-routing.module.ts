@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductComponent } from './product/product.component';
 import { CategoryComponent } from './category/category.component';
-import { CounterComponent } from './counter/counter.component';
+import { OverviewPricesComponent } from './overview-prices/overview-prices.component';
 
 const appRoutes: Routes = [
     { path: '', component: ProductComponent, pathMatch: 'full' },
     { path: 'category', component: CategoryComponent },
-    { path: 'counter', component: CounterComponent },
+    { path: 'overview_prices', component: OverviewPricesComponent },
 ];
 
 @NgModule({

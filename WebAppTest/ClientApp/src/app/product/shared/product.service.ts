@@ -36,6 +36,12 @@ export class ProductService {
       `/Product/Filter?year=${year}&month=${month}&day=${day}&desc=${desc}&catg=${catg}`, {headers: headers}).toPromise();
   }
 
+  async GetOverviewPriceProductsByFilter(year: string, catg: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return await this.http.get(this.rootUrl +
+      `/Product/OverviewPricesProducts/Filter?year=${year}&catg=${catg}`, {headers: headers}).toPromise();
+  }
+
   async getProductById(id: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return await this.http.get(this.rootUrl + '/Product/' + id, {headers: headers}).toPromise();
