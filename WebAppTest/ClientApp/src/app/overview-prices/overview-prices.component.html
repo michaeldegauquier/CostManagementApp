@@ -7,7 +7,7 @@
             </select>
         </li>
 
-        <li class="inputFieldYearMonth">
+        <li class="inputFieldYear">
             <input type="number" class="form-control" (click)="selectYear($event)" (change)="selectYear($event)" 
                     value="{{defaultYear}}" placeholder="Jaar"/>
         </li>
@@ -41,7 +41,7 @@
 
             <ng-container matColumnDef="PricePaid">
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Betaalde kost
+                    Betaald
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="color: rgb(0, 180, 0);">
                     € {{overviewPrice.pricePaid.toFixed(2)}}
@@ -50,7 +50,7 @@
 
             <ng-container matColumnDef="PriceToPaid">
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Nog te betalen kost
+                    Nog te betalen
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="color: red;">
                     € {{overviewPrice.priceToPaid.toFixed(2)}}

@@ -9,7 +9,7 @@ import { CategoryComponent } from '../category.component';
 @Component({
   selector: 'app-category-update',
   templateUrl: './category-update.component.html',
-  styleUrls: ['../category.component.css']
+  styleUrls: ['./../../shared/styles.css', '../category.component.css']
 })
 export class CategoryUpdateComponent implements OnInit {
 

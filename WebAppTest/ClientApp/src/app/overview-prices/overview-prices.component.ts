@@ -7,7 +7,7 @@ import { CategoryService } from './../category/shared/category.service';
 @Component({
   selector: 'app-overview-prices',
   templateUrl: './overview-prices.component.html',
-  styleUrls: ['./overview-prices.component.css']
+  styleUrls: ['./../shared/styles.css', './overview-prices.component.css']
 })
 export class OverviewPricesComponent implements OnInit {
 

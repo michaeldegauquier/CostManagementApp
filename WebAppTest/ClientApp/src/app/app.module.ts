@@ -22,6 +22,7 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryCreateComponent } from './category/category-create/category-create.component';
 import { CategoryUpdateComponent } from './category/category-update/category-update.component';
 import { OverviewPricesComponent } from './overview-prices/overview-prices.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { OverviewPricesComponent } from './overview-prices/overview-prices.compo
     CategoryComponent,
     CategoryCreateComponent,
     CategoryUpdateComponent,
-    OverviewPricesComponent
+    OverviewPricesComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

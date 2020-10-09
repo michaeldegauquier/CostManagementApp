@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProductComponent } from './product/product.component';
 import { CategoryComponent } from './category/category.component';
 import { OverviewPricesComponent } from './overview-prices/overview-prices.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
     { path: '', component: ProductComponent, pathMatch: 'full' },
     { path: 'category', component: CategoryComponent },
     { path: 'overview_prices', component: OverviewPricesComponent },
+    { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

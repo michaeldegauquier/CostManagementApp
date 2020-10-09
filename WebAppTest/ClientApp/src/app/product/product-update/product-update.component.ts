@@ -10,7 +10,7 @@ import { ProductComponent } from '../product.component';
 @Component({
   selector: 'app-product-update',
   templateUrl: './product-update.component.html',
-  styleUrls: ['../product.component.css']
+  styleUrls: ['./../../shared/styles.css', '../product.component.css']
 })
 export class ProductUpdateComponent implements OnInit {
 
