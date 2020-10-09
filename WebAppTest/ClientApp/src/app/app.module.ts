@@ -15,7 +15,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { CounterComponent } from './counter/counter.component';
 import { ProductComponent } from './product/product.component';
 import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ProductUpdateComponent } from './product/product-update/product-update.component';
@@ -29,7 +28,6 @@ import { OverviewPricesComponent } from './overview-prices/overview-prices.compo
   declarations: [
     AppComponent,
     NavMenuComponent,
-    CounterComponent,
     ProductComponent,
     ProductCreateComponent,
     ProductUpdateComponent,
