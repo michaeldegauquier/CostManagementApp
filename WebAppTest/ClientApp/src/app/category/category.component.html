@@ -10,8 +10,8 @@
     <div class="scrollable">
         <table mat-table class="table table-striped" [dataSource]="dataSource">
             <ng-container matColumnDef="Name">
-                <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Categorie
+                <th mat-header-cell class="table_th" *matHeaderCellDef (click)="sortOnName()">
+                    Categorie<i class="material-icons md-20">{{sortNameAsc == true? 'expand_more' : 'expand_less'}}</i>
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let category">
                     {{category.name}}

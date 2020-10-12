@@ -37,6 +37,7 @@ export class ProductComponent implements OnInit {
 
   // Sort Column variables
   public sortDateAsc = false;
+  public sortCatgAsc = false;
   public sortPriceAsc = false;
   public sortPaidAsc = false;
 
@@ -157,7 +158,18 @@ export class ProductComponent implements OnInit {
       this.dataSource.data = this.products.sort((a, b) => b.datePurchased.localeCompare(a.datePurchased));
       this.sortDateAsc = false;
     }
-    this.sortPaidAsc = false, this.sortPriceAsc = false;
+    this.sortPaidAsc = false, this.sortPriceAsc = false, this.sortCatgAsc = false;
+  }
+
+  sortOnCategory() {
+    if (this.sortCatgAsc === false) {
+      this.dataSource.data = this.products.sort((a, b) => a.category.name.localeCompare(b.category.name));
+      this.sortCatgAsc = true;
+    } else {
+      this.dataSource.data = this.products.sort((a, b) => b.category.name.localeCompare(a.category.name));
+      this.sortCatgAsc = false;
+    }
+    this.sortPaidAsc = false, this.sortPriceAsc = false, this.sortDateAsc = false;
   }
 
   sortOnPrice() {
@@ -168,7 +180,7 @@ export class ProductComponent implements OnInit {
       this.dataSource.data = this.products.sort((a, b) => b.price - a.price);
       this.sortPriceAsc = false;
     }
-    this.sortPaidAsc = false, this.sortDateAsc = false;
+    this.sortPaidAsc = false, this.sortDateAsc = false, this.sortCatgAsc = false;
   }
 
   sortOnPaid() {
@@ -179,7 +191,7 @@ export class ProductComponent implements OnInit {
       this.dataSource.data = this.products.sort((a, b) => b.paid - a.paid);
       this.sortPaidAsc = false;
     }
-    this.sortDateAsc = false, this.sortPriceAsc = false;
+    this.sortDateAsc = false, this.sortPriceAsc = false, this.sortCatgAsc = false;
   }
 
   checkSorted() {
@@ -192,6 +204,9 @@ export class ProductComponent implements OnInit {
     } else if (this.sortDateAsc === true) {
       this.sortDateAsc = false;
       this.sortOnDate();
+    } else if (this.sortCatgAsc === true) {
+      this.sortCatgAsc = false;
+      this.sortOnCategory();
     }
   }
 }

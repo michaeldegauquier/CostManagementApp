@@ -29,6 +29,7 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getAllCategories().then((data: any[]) => {
       this.categories = data;
       this.dataSource = new MatTableDataSource<any[]>(this.categories);
+      this.checkSorted();
     })
     .catch((error) => {
       // if (error.status === 401) {}
@@ -71,7 +72,7 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  // Sort Functions
+  // Sort Functions -- never used for the moment
   sortOnName() {
     if (this.sortNameAsc === false) {
       this.dataSource.data = this.categories.sort((a, b) => a.name.localeCompare(b.name));

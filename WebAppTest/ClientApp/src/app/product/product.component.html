@@ -44,8 +44,8 @@
             </ng-container>
 
             <ng-container matColumnDef="Category">
-                <th mat-header-cell class="table_th" *matHeaderCellDef>
-                    Categorie
+                <th mat-header-cell class="table_th" *matHeaderCellDef (click)="sortOnCategory()">
+                    Categorie<i class="material-icons md-20">{{sortCatgAsc == true? 'expand_more' : 'expand_less'}}</i>
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     {{product.category.name}}
