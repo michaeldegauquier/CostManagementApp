@@ -26,27 +26,32 @@ export class CategoryService {
   }
 
   async getAllCategories() {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.get(this.rootUrl + '/Category', {headers: headers}).toPromise();
   }
 
   async getCategoryById(id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.get(this.rootUrl + '/Category/' + id, {headers: headers}).toPromise();
   }
 
   async createCategory(formData: Category) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.post(this.rootUrl + '/Category', formData, {headers: headers}).toPromise();
   }
 
   async updateCategory(formData: Category, id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.put(this.rootUrl + '/Category/' + id, formData, {headers: headers}).toPromise();
   }
 
   async deleteCategory(id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.delete(this.rootUrl + '/Category/' + id, {headers: headers}).toPromise();
   }
 }

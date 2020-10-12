@@ -26,44 +26,52 @@ export class ProductService {
   }
 
   async getAllProducts() {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.get(this.rootUrl + '/Product', {headers: headers}).toPromise();
   }
 
   async getAllProductsByFilter(year: string, month: string, day: string, desc: string, catg: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.get(this.rootUrl +
       `/Product/Filter?year=${year}&month=${month}&day=${day}&desc=${desc}&catg=${catg}`, {headers: headers}).toPromise();
   }
 
   async GetOverviewPriceProductsByFilter(year: string, catg: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.get(this.rootUrl +
       `/Product/OverviewPricesProducts/Filter?year=${year}&catg=${catg}`, {headers: headers}).toPromise();
   }
 
   async getProductById(id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.get(this.rootUrl + '/Product/' + id, {headers: headers}).toPromise();
   }
 
   async createProduct(formData: Product) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.post(this.rootUrl + '/Product', formData, {headers: headers}).toPromise();
   }
 
   async updateProduct(formData: Product, id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.put(this.rootUrl + '/Product/' + id, formData, {headers: headers}).toPromise();
   }
 
   async updateProductPropPaid(formData: Product, id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.put(this.rootUrl + '/Product/PropPaid/' + id, formData, {headers: headers}).toPromise();
   }
 
   async deleteProduct(id: string) {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.delete(this.rootUrl + '/Product/' + id, {headers: headers}).toPromise();
   }
 }

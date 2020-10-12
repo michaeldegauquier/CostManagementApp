@@ -18,6 +18,10 @@ namespace Domain.Models
         [Required]
         public bool Paid { get; set; }
 
+        //User
+        public string UserId { get; set; }
+        public User User { get; set; }
+
         //Category
         public long? CategoryId { get; set; }
         public virtual Category Category { get; set; }

@@ -8,9 +8,12 @@ using Application.Commands.Category.Queries.GetCategoryById;
 using Application.Commands.Category.Commands.UpdateCategory;
 using Application.Commands.Category.Commands.CreateCategory;
 using Application.Commands.Category.Commands.DeleteCategory;
+using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace WebAppTest.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -26,14 +29,14 @@ namespace WebAppTest.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
         {
-            return await _mediator.Send(new GetAllCategoriesQuery());
+            return await _mediator.Send(new GetAllCategoriesQuery { UserId = getUserId() });
         }
 
         // GET: api/Category/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(long id)
         {
-            var category = await _mediator.Send(new GetCategoryByIdQuery { Id = id });
+            var category = await _mediator.Send(new GetCategoryByIdQuery { UserId = getUserId(), Id = id });
 
             if (category == null)
             {
@@ -52,6 +55,9 @@ namespace WebAppTest.Controllers
                 return BadRequest();
             }
 
+            string UserId = getUserId();
+            category.UserId = UserId;
+
             await _mediator.Send(category);
 
             return NoContent();
@@ -61,6 +67,9 @@ namespace WebAppTest.Controllers
         [HttpPost]
         public async Task<ActionResult<long>> PostCategory(CreateCategoryCommand category)
         {
+            string UserId = getUserId();
+            category.UserId = UserId;
+
             return await _mediator.Send(category);
         }
 
@@ -68,9 +77,15 @@ namespace WebAppTest.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(long id)
         {
-            await _mediator.Send(new DeleteCategoryCommand { Id = id });
+            await _mediator.Send(new DeleteCategoryCommand { UserId = getUserId(), Id = id });
 
             return NoContent();
+        }
+
+        // It returns the right UserId that can be found in the TOKEN
+        private string getUserId()
+        {
+            return HttpContext?.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value;
         }
     }
 }

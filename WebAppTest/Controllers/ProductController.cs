@@ -10,9 +10,12 @@ using Application.Commands.Product.Commands.UpdateProduct;
 using Application.Commands.Product.Commands.DeleteProduct;
 using Application.Commands.Product.Queries.GetAllProductsByFilter;
 using Application.Commands.Product.Queries.GetOverviewProductPrices;
+using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace WebAppTest.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -28,28 +31,28 @@ namespace WebAppTest.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _mediator.Send(new GetAllProductsQuery());
+            return await _mediator.Send(new GetAllProductsQuery { UserId = getUserId() });
         }
 
         // GET: api/Product/Filter?year=2020&month=02&day=12&desc=test&catg=test
         [HttpGet("Filter")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByFilter(int? year, int? month, int? day, string desc, string catg)
         {
-            return await _mediator.Send(new GetAllProductsByFilterQuery { Year = year, Month = month, Day = day, Description = desc, Category = catg });
+            return await _mediator.Send(new GetAllProductsByFilterQuery { UserId = getUserId(), Year = year, Month = month, Day = day, Description = desc, Category = catg });
         }
 
         // GET: api/Product/OverviewPricesProducts/Filter?year=2020&catg=test
         [HttpGet("OverviewPricesProducts/Filter")]
         public async Task<ActionResult<IEnumerable<OverviewPricesProduct>>> GetOverviewPriceProductsByFilter(int? year, string catg)
         {
-            return await _mediator.Send(new GetOverviewProductPricesQuery { Year = year, Category = catg });
+            return await _mediator.Send(new GetOverviewProductPricesQuery { UserId = getUserId(), Year = year, Category = catg });
         }
 
         // GET: api/Product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(long id)
         {
-            var product = await _mediator.Send(new GetProductByIdQuery { Id = id });
+            var product = await _mediator.Send(new GetProductByIdQuery { UserId = getUserId(), Id = id });
 
             if (product == null)
             {
@@ -68,6 +71,9 @@ namespace WebAppTest.Controllers
                 return BadRequest();
             }
 
+            string UserId = getUserId();
+            product.UserId = UserId;
+
             await _mediator.Send(product);
 
             return NoContent();
@@ -82,6 +88,9 @@ namespace WebAppTest.Controllers
                 return BadRequest();
             }
 
+            string UserId = getUserId();
+            product.UserId = UserId;
+
             await _mediator.Send(product);
 
             return NoContent();
@@ -91,6 +100,9 @@ namespace WebAppTest.Controllers
         [HttpPost]
         public async Task<ActionResult<long>> PostProduct(CreateProductCommand product)
         {
+            string UserId = getUserId();
+            product.UserId = UserId;
+
             return await _mediator.Send(product);
         }
 
@@ -98,9 +110,15 @@ namespace WebAppTest.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(long id)
         {
-            await _mediator.Send(new DeleteProductCommand { Id = id });
+            await _mediator.Send(new DeleteProductCommand { UserId = getUserId(), Id = id });
 
             return NoContent();
+        }
+
+        // It returns the right UserId that can be found in the TOKEN
+        private string getUserId()
+        {
+            return HttpContext?.User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value;
         }
     }
 }

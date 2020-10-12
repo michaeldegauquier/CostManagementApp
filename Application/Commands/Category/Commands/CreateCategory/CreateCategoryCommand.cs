@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace Application.Commands.Category.Commands.CreateCategory
 {
     public class CreateCategoryCommand : IRequest<long>
     {
+        public string UserId { get; set; }
         public string Name { get; set; }
 
         public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, long>
@@ -22,10 +24,15 @@ namespace Application.Commands.Category.Commands.CreateCategory
 
             public async Task<long> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
-                var category = new Domain.Models.Category();
-                category.Name = request.Name.Trim();
+                var category = new Domain.Models.Category
+                {
+                    UserId = request.UserId,
+                    Name = request.Name.Trim()
+                };
 
-                var categoryList = await _context.Category.ToListAsync();
+                var categoryList = await _context.Category
+                    .Where(x => x.UserId == request.UserId)
+                    .ToListAsync();
 
                 if (categoryList.Exists(x => x.Name.ToLower().Trim() == category.Name.ToLower().Trim()))
                 {

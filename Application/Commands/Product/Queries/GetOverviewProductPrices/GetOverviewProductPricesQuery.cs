@@ -12,6 +12,7 @@ namespace Application.Commands.Product.Queries.GetOverviewProductPrices
 {
     public class GetOverviewProductPricesQuery : IRequest<List<Domain.Models.OverviewPricesProduct>>
     {
+        public string UserId { get; set; }
         public int? Year { get; set; }
         public string Category { get; set; }
 
@@ -26,7 +27,7 @@ namespace Application.Commands.Product.Queries.GetOverviewProductPrices
 
             public async Task<List<OverviewPricesProduct>> Handle(GetOverviewProductPricesQuery request, CancellationToken cancellationToken)
             {
-                var productList = _context.Product;
+                var productList = _context.Product.Where(x => x.UserId == request.UserId);
                 List<Domain.Models.Product> productListHelper = await productList
                     .Include(x => x.Category)
                     .ToListAsync(cancellationToken);

@@ -10,6 +10,8 @@ namespace Application.Commands.Product.Queries.GetAllProducts
 {
     public class GetAllProductsQuery : IRequest<List<Domain.Models.Product>>
     {
+        public string UserId { get; set; }
+
         public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, List<Domain.Models.Product>>
         {
             private readonly IDatabaseContext _context;
@@ -23,6 +25,7 @@ namespace Application.Commands.Product.Queries.GetAllProducts
             {
                 return await _context.Product
                     .Include(x => x.Category)
+                    .Where(x => x.UserId == request.UserId)
                     .OrderByDescending(x => x.DatePurchased)
                     .ToListAsync(cancellationToken);
             }

@@ -10,6 +10,8 @@ namespace Application.Commands.Category.Queries.GetAllCategories
 {
     public class GetAllCategoriesQuery : IRequest<List<Domain.Models.Category>>
     {
+        public string UserId { get; set; }
+
         public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuery, List<Domain.Models.Category>>
         {
             private readonly IDatabaseContext _context;
@@ -22,6 +24,7 @@ namespace Application.Commands.Category.Queries.GetAllCategories
             public async Task<List<Domain.Models.Category>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
             {
                 return await _context.Category
+                    .Where(x => x.UserId == request.UserId)
                     .OrderBy(x => x.Name)
                     .ToListAsync(cancellationToken);
             }

@@ -10,5 +10,9 @@ namespace Domain.Models
         public long Id { get; set; }
         [Required]
         public string Name { get; set; }
+
+        //User
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

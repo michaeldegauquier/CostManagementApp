@@ -10,6 +10,7 @@ namespace Application.Commands.Product.Queries.GetAllProductsByFilter
 {
     public class GetAllProductsByFilterQuery : IRequest<List<Domain.Models.Product>>
     {
+        public string UserId { get; set; }
         public int? Year { get; set; }
         public int? Month { get; set; }
         public int? Day { get; set; }
@@ -28,7 +29,7 @@ namespace Application.Commands.Product.Queries.GetAllProductsByFilter
 
             public async Task<List<Domain.Models.Product>> Handle(GetAllProductsByFilterQuery request, CancellationToken cancellationToken)
             {
-                var productList = _context.Product;
+                var productList = _context.Product.Where(x => x.UserId == request.UserId);
                 List<Domain.Models.Product> productListHelper = await productList
                     .Include(x => x.Category)
                     .ToListAsync(cancellationToken);
