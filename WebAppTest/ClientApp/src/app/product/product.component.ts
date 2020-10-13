@@ -59,7 +59,10 @@ export class ProductComponent implements OnInit {
       this.totalPrice = this.getTotalPrices(this.products)[2];
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -68,7 +71,10 @@ export class ProductComponent implements OnInit {
       this.categories = data;
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -136,7 +142,10 @@ export class ProductComponent implements OnInit {
       this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
     })
     .catch((error) => {
-      // if (error.status == 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -145,7 +154,10 @@ export class ProductComponent implements OnInit {
       this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
     })
     .catch((error) => {
-      // if (error.status == 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 

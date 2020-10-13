@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Kosten-Assistent App</h3>
+            <hr/>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <div class="form-row">
+                        <label>Email:</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div class="form-row">
+                        <label>Wachtwoord:</label>
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        </div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <p *ngIf="wrongLogin == true" style="color: red; font-size: smaller;">
+                        Gebruikersnaam of wachtwoord is incorrect, probeer opnieuw!
+                    </p>
+                    <div class="form-row">
+                        <button type="button" class="normalButton buttonColor" type="submit" style="width: 100%;">{{loggingIn? 'Logging in...' : 'Login'}}</button>
+                    </div>
+                    <br/>
+                    <p style="text-align: center;">Geen account? Registreer <a routerLink="/register">hier</a>.</p>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

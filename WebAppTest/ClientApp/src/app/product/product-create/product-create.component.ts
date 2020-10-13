@@ -1,7 +1,8 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { noWhitespaceValidator } from '../shared/productHelper';
+import { noWhitespaceValidator } from './../../shared/helperFunctions';
 import { Subscription } from 'rxjs';
 import { ProductService } from './../shared/product.service';
 import { CategoryService } from './../../category/shared/category.service';
@@ -20,7 +21,7 @@ export class ProductCreateComponent implements OnInit {
   submitted = false;
 
   constructor(private productComponent: ProductComponent, private modalService: NgbModal, private formBuilder: FormBuilder,
-              private productService: ProductService, private categoryService: CategoryService) { }
+              private productService: ProductService, private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit() {
     this.getCategoryList();
@@ -32,7 +33,10 @@ export class ProductCreateComponent implements OnInit {
       this.categories = data;
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -71,6 +75,10 @@ export class ProductCreateComponent implements OnInit {
         this.productComponent.catgFilter);
     })
     .catch((error) => {
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
       if (error.status === 404) {
         console.log('No connection with Database (404)');
       }

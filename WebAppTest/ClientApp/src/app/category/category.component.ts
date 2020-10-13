@@ -32,7 +32,10 @@ export class CategoryComponent implements OnInit {
       this.checkSorted();
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -60,7 +63,10 @@ export class CategoryComponent implements OnInit {
       this.getCategoryList();
     })
     .catch((error) => {
-      // if (error.status == 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
       if (error.status === 500) {
         console.log(content);
         this.modalService.open(content, {ariaLabelledBy: 'category-delete-modal'}).result.then((result) => {

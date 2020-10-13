@@ -1,24 +1,5 @@
 import { FormGroup } from '@angular/forms';
 
-// custom validator to check whitespace as input
-export function noWhitespaceValidator(controlName: string) {
-    return (formGroup: FormGroup) => {
-        const control = formGroup.controls[controlName];
-
-        if (control.errors && !control.errors.noWhitespace) {
-            // return if another validator has already found an error on the control
-            return;
-        }
-
-        // set error on control if validation fails
-        if ((control.value || '').trim().length === 0) {
-            control.setErrors({ noWhitespace: true });
-        } else {
-            control.setErrors(null);
-        }
-    };
-}
-
 // custom validator to check name of the category already exists (CREATE)
 export function checkExistenceCatgNameValidator(controlName: string, categoryList: any[]) {
     return (formGroup: FormGroup) => {

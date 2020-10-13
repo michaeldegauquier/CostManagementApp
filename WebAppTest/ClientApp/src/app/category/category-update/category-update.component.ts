@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { noWhitespaceValidator, checkExistenceCatgNameUpdateValidator } from '../shared/categoryHelper';
+import { checkExistenceCatgNameUpdateValidator } from '../shared/categoryHelper';
+import { noWhitespaceValidator } from './../../shared/helperFunctions';
 import { Subscription } from 'rxjs';
 import { CategoryService } from './../../category/shared/category.service';
 import { CategoryComponent } from '../category.component';
@@ -21,7 +23,7 @@ export class CategoryUpdateComponent implements OnInit {
   submitted = false;
 
   constructor(private categoryComponent: CategoryComponent, private modalService: NgbModal, private formBuilder: FormBuilder,
-              private categoryService: CategoryService) { }
+              private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit() {
     this.categoryService.getCategoryId().subscribe(id => this.categoryId = id);
@@ -58,7 +60,10 @@ export class CategoryUpdateComponent implements OnInit {
       this.updateForm();
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -88,6 +93,10 @@ export class CategoryUpdateComponent implements OnInit {
       this.categoryComponent.getCategoryList();
     })
     .catch((error) => {
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
       if (error.status === 404) {
         console.log('No connection with Database (404)');
       }

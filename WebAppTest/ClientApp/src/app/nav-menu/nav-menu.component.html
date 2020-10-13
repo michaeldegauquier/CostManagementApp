@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="showNavBar()">
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 backgroundColor">
     <div class="container">
       <a class="navbar-brand textColor" [routerLink]="['/']">Kosten Assistent App</a>
@@ -37,6 +37,11 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link textColor" [routerLink]="['/overview_prices']">
               Overzicht uitgaven
+            </a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link textColor" [routerLink]="['/login']" (click)="logout()">
+              <i class="material-icons md-18">exit_to_app</i> Uitloggen
             </a>
           </li>
         </ul>

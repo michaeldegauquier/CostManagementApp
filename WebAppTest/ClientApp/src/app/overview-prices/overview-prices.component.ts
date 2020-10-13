@@ -40,7 +40,10 @@ export class OverviewPricesComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any[]>(this.overviewPrices);
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -49,7 +52,10 @@ export class OverviewPricesComponent implements OnInit {
       this.categories = data;
     })
     .catch((error) => {
-      // if (error.status === 401) {}
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
   }
 
