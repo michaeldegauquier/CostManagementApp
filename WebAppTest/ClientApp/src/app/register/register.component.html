@@ -1,1 +1,58 @@
-<p>register works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h3 class="card-title text-center">Registreren</h3>
+            <hr/>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <div class="form-row">
+                        <label>Email:</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Dit veld is vereist</div>
+                            <div *ngIf="f.email.errors.email">Moet in emailformaat staan</div>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div class="form-row">
+                        <label>Wachtwoord:</label>
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Dit veld is vereist</div>
+                            <div *ngIf="f.password.errors.minlength">Minimum 8 karakters</div>
+                            <div *ngIf="f.password.errors.maxlength">Maximum 30 karakters</div>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div class="form-row">
+                        <label>Bevestig Wachtwoord:</label>
+                        <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                            <div *ngIf="f.confirmPassword.errors.required">Dit veld is vereist</div>
+                            <div *ngIf="f.confirmPassword.errors.mustMatch">Wachtwoorden moeten overeenkomen</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <p *ngIf="emailExists == true" class="registerError">
+                        Deze email is al in gebruik, probeer opnieuw!
+                    </p>
+                    <div class="form-row">
+                        <button type="submit" class="normalButton buttonColor registerButton">{{registering? 'Registreren...' : 'Registreer'}}</button>
+                        <br/>
+                        <button type="button" class="normalButton buttonColor registerButton" [routerLink]="['/login']">Terug naar Login</button>
+                    </div>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+

@@ -1,0 +1,8 @@
+.registerError {
+    color: red;
+    font-size: smaller;
+}
+
+.registerButton {
+    width: 100%;
+}

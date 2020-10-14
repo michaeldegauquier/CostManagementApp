@@ -25,7 +25,7 @@
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
                     Maand
                 </th>
-                <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="width: 40%; padding-top: 5px; padding-bottom: 5px;">
+                <td mat-cell class="table_td monthColumn" *matCellDef="let overviewPrice">
                     {{translateMonthNumber(overviewPrice.month) + ' ' + year}}
                 </td>
             </ng-container>
@@ -43,7 +43,7 @@
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
                     Betaald
                 </th>
-                <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="color: rgb(0, 180, 0);">
+                <td mat-cell class="table_td pricePaidColor" *matCellDef="let overviewPrice">
                     € {{overviewPrice.pricePaid.toFixed(2)}}
                 </td>
             </ng-container>
@@ -52,7 +52,7 @@
                 <th mat-header-cell class="table_th" *matHeaderCellDef>
                     Nog te betalen
                 </th>
-                <td mat-cell class="table_td" *matCellDef="let overviewPrice" style="color: red;">
+                <td mat-cell class="table_td priceToPaidColor" *matCellDef="let overviewPrice">
                     € {{overviewPrice.priceToPaid.toFixed(2)}}
                 </td>
             </ng-container>

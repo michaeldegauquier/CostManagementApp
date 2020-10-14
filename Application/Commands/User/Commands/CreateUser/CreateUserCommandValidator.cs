@@ -13,8 +13,7 @@ namespace Application.Commands.User.Commands.CreateUser
 
             RuleFor(v => v.Password)
                 .NotNull()
-                .NotEmpty()
-                .MaximumLength(20);
+                .NotEmpty();
         }
     }
 }

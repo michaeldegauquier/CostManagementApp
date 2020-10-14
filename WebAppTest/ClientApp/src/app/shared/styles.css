@@ -20,6 +20,12 @@
     text-decoration: none;
   }
 
+  /*Error message*/
+  .errorMessage {
+    background-color: red; 
+    color: white;
+  }
+
   /*Table*/
   .scrollable {
     overflow-y: auto;
@@ -55,6 +61,20 @@
 
   .table_td {
     vertical-align: middle;
+  }
+
+  .pricePaidColor {
+    color: rgb(0, 180, 0);
+  }
+
+  .priceToPaidColor {
+    color: red;
+  }
+
+  .tableTotalPrices {
+    width: 40%; 
+    float: right; 
+    text-align: center;
   }
 
   /*Buttons, inputs*/
@@ -102,6 +122,10 @@
     background-color: rgb(184, 28, 28);
     color: white;
     transition-duration: 0.4s;
+  }
+
+  .widthCheckbox {
+    width: 40px;
   }
 
   .material-icons.md-18 { 

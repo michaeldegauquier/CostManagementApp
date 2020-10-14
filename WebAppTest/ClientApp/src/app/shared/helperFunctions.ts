@@ -22,7 +22,7 @@ export function noWhitespaceValidator(controlName: string) {
 }
 
 // custom validator to check that two fields match
-export function MustMatch(controlName: string, matchingControlName: string) {
+export function mustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];

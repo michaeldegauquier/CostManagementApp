@@ -1,0 +1,12 @@
+.inlogError {
+    color: red;
+    font-size: smaller;
+}
+
+.loginButton {
+    width: 100%;
+}
+
+.registerText {
+    text-align: center;
+}

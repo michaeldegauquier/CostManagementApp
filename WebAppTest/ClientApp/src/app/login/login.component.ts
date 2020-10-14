@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth-guard/auth.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -45,13 +46,18 @@ export class LoginComponent implements OnInit {
   // Submit the form
   onSubmit() {
     this.submitted = true;
-    this.loggingIn = true; // This boolean is for showing the user when he/she gets logged in
+    this.wrongLogin = false;
 
     // Stop here if form is invalid
     if (this.loginForm.invalid) {
         return;
     }
 
+    this.loggingIn = true; // This boolean is for showing the user when he/she gets logged in
+
+    // Hash password_string (SHA512)
+    this.loginForm.value.password = CryptoJS.SHA512(this.loginForm.value.password).toString();
+    console.log(this.loginForm.value.password);
     this.loginService.Login(this.loginForm.value).then((data: any) => {
       localStorage.setItem('token', data.token);
       this.router.navigate(['/']);

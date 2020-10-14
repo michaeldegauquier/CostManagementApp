@@ -1,7 +1,11 @@
 ﻿using Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,7 +31,7 @@ namespace Application.Commands.User.Commands.CreateUser
                 {
                     Id = Guid.NewGuid().ToString(),
                     Email = request.Email.ToLower().Trim(),
-                    Password = request.Password.Trim()
+                    Password = request.Password
                 };
 
                 var userList = await _context.User.ToListAsync();
@@ -40,7 +44,7 @@ namespace Application.Commands.User.Commands.CreateUser
                 _context.User.Add(user);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return user.Id;
+                return JsonConvert.SerializeObject(user.Id);
             }
         }
     }

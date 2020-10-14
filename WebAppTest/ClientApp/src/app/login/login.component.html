@@ -24,14 +24,14 @@
                     </div>
                     <br/>
                     <hr/>
-                    <p *ngIf="wrongLogin == true" style="color: red; font-size: smaller;">
+                    <p *ngIf="wrongLogin == true" class="inlogError">
                         Gebruikersnaam of wachtwoord is incorrect, probeer opnieuw!
                     </p>
                     <div class="form-row">
-                        <button type="button" class="normalButton buttonColor" type="submit" style="width: 100%;">{{loggingIn? 'Logging in...' : 'Login'}}</button>
+                        <button type="submit" class="normalButton buttonColor loginButton">{{loggingIn? 'Inloggen...' : 'Login'}}</button>
                     </div>
                     <br/>
-                    <p style="text-align: center;">Geen account? Registreer <a routerLink="/register">hier</a>.</p>
+                    <p class="registerText">Geen account? Registreer <a routerLink="/register">hier</a>.</p>
                 </div>
               </form>
           </div>
