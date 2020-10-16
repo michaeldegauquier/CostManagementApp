@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Models;
 using MediatR;
 using Application.Commands.Category.Queries.GetAllCategories;
 using Application.Commands.Category.Queries.GetCategoryById;
@@ -27,14 +25,14 @@ namespace WebAppTest.Controllers
 
         // GET: api/Category
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetCategory()
+        public async Task<IActionResult> GetCategory()
         {
-            return await _mediator.Send(new GetAllCategoriesQuery { UserId = getUserId() });
+            return Ok(await _mediator.Send(new GetAllCategoriesQuery { UserId = getUserId() }));
         }
 
         // GET: api/Category/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetCategory(long id)
+        public async Task<IActionResult> GetCategoryById(long id)
         {
             var category = await _mediator.Send(new GetCategoryByIdQuery { UserId = getUserId(), Id = id });
 
@@ -42,8 +40,7 @@ namespace WebAppTest.Controllers
             {
                 return NotFound();
             }
-
-            return category;
+            return Ok(category);
         }
 
         // PUT: api/Category/5
@@ -59,23 +56,22 @@ namespace WebAppTest.Controllers
             category.UserId = UserId;
 
             await _mediator.Send(category);
-
             return NoContent();
         }
 
         // POST: api/Category
         [HttpPost]
-        public async Task<ActionResult<long>> PostCategory(CreateCategoryCommand category)
+        public async Task<IActionResult> PostCategory(CreateCategoryCommand category)
         {
             string UserId = getUserId();
             category.UserId = UserId;
 
-            return await _mediator.Send(category);
+            return Ok(await _mediator.Send(category));
         }
 
         // DELETE: api/Category/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCategory(long id)
+        public async Task<IActionResult> DeleteCategory(long id)
         {
             await _mediator.Send(new DeleteCategoryCommand { UserId = getUserId(), Id = id });
 

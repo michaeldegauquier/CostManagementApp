@@ -34,6 +34,16 @@
 
     <div class="scrollable">
         <table mat-table class="table table-striped" [dataSource]="dataSource">
+            <ng-container matColumnDef="DeleteCheckboxes">
+                <th mat-header-cell class="table_th" *matHeaderCellDef>
+                </th>
+                <td mat-cell class="table_td" *matCellDef="let product">
+                    <div>
+                        <input class="test" type="checkbox" id="deleteCheckbox" name="deleteCheckbox" (change)="deleteItemCheck(product.id, $event)">
+                    </div>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="DatePurchased">
                 <th mat-header-cell class="table_th" *matHeaderCellDef (click)="sortOnDate()">
                     Datum<i class="material-icons md-20">{{sortDateAsc == true? 'expand_more' : 'expand_less'}}</i>

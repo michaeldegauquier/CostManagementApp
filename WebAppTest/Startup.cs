@@ -106,7 +106,8 @@ namespace WebAppTest
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Error");
+                // app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -141,6 +142,7 @@ namespace WebAppTest
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");

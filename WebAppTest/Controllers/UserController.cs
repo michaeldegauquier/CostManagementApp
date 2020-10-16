@@ -18,9 +18,9 @@ namespace WebAppTest.Controllers
 
         // POST: api/User/Register
         [HttpPost("Register")]
-        public async Task<ActionResult<string>> Register(CreateUserCommand user)
+        public async Task<IActionResult> Register(CreateUserCommand user)
         {
-            return await _mediator.Send(user);
+            return Ok(await _mediator.Send(user));
         }
     }
 }

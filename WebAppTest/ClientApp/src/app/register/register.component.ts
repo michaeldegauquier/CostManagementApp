@@ -59,21 +59,20 @@ export class RegisterComponent implements OnInit {
 
     this.registering = true; // This boolean is for showing the user when he/she is registering
 
-    // Hash password_string (SHA256)
+    // Hash password_string (SHA512)
     this.registerForm.value.password = CryptoJS.SHA512(this.registerForm.value.password).toString();
+    // Make conformPassword empty
     this.registerForm.value.confirmPassword =  '';
-    console.log(this.registerForm.value);
     this.registerService.Register(this.registerForm.value).then((data: any) => {
       this.onReset();
       this.router.navigate(['/login']);
     })
     .catch((error) => {
-      if (error.status === 500) {
+      if (error.status === 400) {
         this.emailExists = true;
         this.registering = false;
         this.onReset();
       }
-      console.log(error);
     });
   }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Commands.Session.Commands.CreateSession;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,25 +20,17 @@ namespace WebAppTest.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(CreateSessionCommand command)
         {
-            try
-            {
-                var session = await _mediator.Send(command);
+            var session = await _mediator.Send(command);
 
-                if (session != null)
-                {
-                    return Ok(new
-                    {
-                        token = session.Token,
-                        expiration = session.Expiration
-                    });
-                }
-                //return Unauthorized();
-                return StatusCode(401, "Username or password is incorrect!");
-            }
-            catch (Exception e)
+            if (session != null)
             {
-                return StatusCode(500, e.Message);
+                return Ok(new
+                {
+                    token = session.Token,
+                    expiration = session.Expiration
+                });
             }
+            return Unauthorized("Username or password is incorrect!");
         }
     }
 }

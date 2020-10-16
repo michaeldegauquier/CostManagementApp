@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
 
     // Hash password_string (SHA512)
     this.loginForm.value.password = CryptoJS.SHA512(this.loginForm.value.password).toString();
-    console.log(this.loginForm.value.password);
     this.loginService.Login(this.loginForm.value).then((data: any) => {
       localStorage.setItem('token', data.token);
       this.router.navigate(['/']);

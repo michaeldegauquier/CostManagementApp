@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Models;
 using MediatR;
 using Application.Commands.Product.Queries.GetAllProducts;
 using Application.Commands.Product.Queries.GetProductById;
@@ -29,28 +27,28 @@ namespace WebAppTest.Controllers
 
         // GET: api/Product
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<IActionResult> GetProduct()
         {
-            return await _mediator.Send(new GetAllProductsQuery { UserId = getUserId() });
+            return Ok(await _mediator.Send(new GetAllProductsQuery { UserId = getUserId() }));
         }
 
         // GET: api/Product/Filter?year=2020&month=02&day=12&desc=test&catg=test
         [HttpGet("Filter")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByFilter(int? year, int? month, int? day, string desc, string catg)
+        public async Task<IActionResult> GetProductByFilter(int? year, int? month, int? day, string desc, string catg)
         {
-            return await _mediator.Send(new GetAllProductsByFilterQuery { UserId = getUserId(), Year = year, Month = month, Day = day, Description = desc, Category = catg });
+            return Ok(await _mediator.Send(new GetAllProductsByFilterQuery { UserId = getUserId(), Year = year, Month = month, Day = day, Description = desc, Category = catg }));
         }
 
         // GET: api/Product/OverviewPricesProducts/Filter?year=2020&catg=test
         [HttpGet("OverviewPricesProducts/Filter")]
-        public async Task<ActionResult<IEnumerable<OverviewPricesProduct>>> GetOverviewPriceProductsByFilter(int? year, string catg)
+        public async Task<IActionResult> GetOverviewPriceProductsByFilter(int? year, string catg)
         {
-            return await _mediator.Send(new GetOverviewProductPricesQuery { UserId = getUserId(), Year = year, Category = catg });
+            return Ok(await _mediator.Send(new GetOverviewProductPricesQuery { UserId = getUserId(), Year = year, Category = catg }));
         }
 
         // GET: api/Product/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(long id)
+        public async Task<IActionResult> GetProduct(long id)
         {
             var product = await _mediator.Send(new GetProductByIdQuery { UserId = getUserId(), Id = id });
 
@@ -59,7 +57,7 @@ namespace WebAppTest.Controllers
                 return NotFound();
             }
 
-            return product;
+            return Ok(product);
         }
 
         // PUT: api/Product/5
@@ -98,17 +96,17 @@ namespace WebAppTest.Controllers
 
         // POST: api/Product
         [HttpPost]
-        public async Task<ActionResult<long>> PostProduct(CreateProductCommand product)
+        public async Task<IActionResult> PostProduct(CreateProductCommand product)
         {
             string UserId = getUserId();
             product.UserId = UserId;
 
-            return await _mediator.Send(product);
+            return Ok(await _mediator.Send(product));
         }
 
         // DELETE: api/Product/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(long id)
+        public async Task<IActionResult> DeleteProduct(long id)
         {
             await _mediator.Send(new DeleteProductCommand { UserId = getUserId(), Id = id });
 

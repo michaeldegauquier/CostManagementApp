@@ -13,10 +13,11 @@ import { Product } from './shared/product.model';
 })
 export class ProductComponent implements OnInit {
 
-  public displayedColumns: string[] = ['DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
+  public displayedColumns: string[] = [/*'DeleteCheckboxes',*/ 'DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
   public dataSource: MatTableDataSource<any[]>;
   private products: any[];
   public categories: any[];
+  public deleteProductsList: Array<number> = [];
 
   // Default Date variables
   public dateToday = new Date();
@@ -159,6 +160,17 @@ export class ProductComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  deleteItemCheck(productId: number, event: any) {
+    if (event.target.checked === true) {
+      this.deleteProductsList.push(productId);
+    } else if (event.target.checked === false) {
+      const index = this.deleteProductsList.indexOf(productId);
+      if (index > -1) {
+        this.deleteProductsList.splice(index, 1);
+      }
+    }
   }
 
   // Sort Functions

@@ -15,7 +15,7 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'category', component: CategoryComponent, canActivate: [AuthGuard] },
     { path: 'overview_prices', component: OverviewPricesComponent, canActivate: [AuthGuard] },
-    { path: '**', component: PageNotFoundComponent },
+    { path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
