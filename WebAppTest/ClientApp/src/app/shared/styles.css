@@ -71,12 +71,6 @@
     color: red;
   }
 
-  .tableTotalPrices {
-    width: 40%; 
-    float: right; 
-    text-align: center;
-  }
-
   /*Buttons, inputs*/
   .normalButton {
     border: none;

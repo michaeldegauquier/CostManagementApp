@@ -13,7 +13,9 @@ import { Product } from './shared/product.model';
 })
 export class ProductComponent implements OnInit {
 
-  public displayedColumns: string[] = [/*'DeleteCheckboxes',*/ 'DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
+  public displayedColumns: string[] = ['DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
+  public displayedColumnsNoDelete: string[] = ['DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
+  public displayedColumnsDelete: string[] = ['DeleteCheckboxes', 'DatePurchased', 'Category', 'Description', 'Price', 'Paid', 'Actions'];
   public dataSource: MatTableDataSource<any[]>;
   private products: any[];
   public categories: any[];
@@ -41,6 +43,9 @@ export class ProductComponent implements OnInit {
   public sortCatgAsc = false;
   public sortPriceAsc = false;
   public sortPaidAsc = false;
+
+  // Delete group
+  public deleteGroup = false;
 
   constructor(private productService: ProductService, private categoryService: CategoryService, private router: Router,
               private modalService: NgbModal) { }
@@ -171,6 +176,30 @@ export class ProductComponent implements OnInit {
         this.deleteProductsList.splice(index, 1);
       }
     }
+  }
+
+  deleteGroupButton() {
+    this.deleteProductsList = [];
+    if (this.deleteGroup === false) {
+      this.displayedColumns = this.displayedColumnsDelete;
+      this.deleteGroup = true;
+    } else {
+      this.displayedColumns = this.displayedColumnsNoDelete;
+      this.deleteGroup = false;
+    }
+  }
+
+  deleteProductByGroupOfIds() {
+    this.productService.deleteProductByGroupOfIds(this.deleteProductsList).then((data: any[]) => {
+      this.getProductList(this.yearFilter, this.monthFilter, this.dayFilter, this.descFilter, this.catgFilter);
+      this.deleteGroupButton();
+    })
+    .catch((error) => {
+      if (error.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   // Sort Functions

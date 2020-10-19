@@ -10,6 +10,7 @@ using Application.Commands.Product.Queries.GetAllProductsByFilter;
 using Application.Commands.Product.Queries.GetOverviewProductPrices;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using Application.Commands.Product.Commands.DeleteProductByGroupOfIds;
 
 namespace WebAppTest.Controllers
 {
@@ -111,6 +112,13 @@ namespace WebAppTest.Controllers
             await _mediator.Send(new DeleteProductCommand { UserId = getUserId(), Id = id });
 
             return NoContent();
+        }
+
+        // DELETE: api/Product/DeleteGroup?ids=12,45,89
+        [HttpDelete("DeleteGroup")]
+        public async Task<IActionResult> DeleteProductByGroupOfIds(string ids)
+        {
+            return Ok(await _mediator.Send(new DeleteProductByGroupOfIdsCommand { UserId = getUserId(), Ids = ids }));
         }
 
         // It returns the right UserId that can be found in the TOKEN

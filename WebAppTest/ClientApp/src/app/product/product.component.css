@@ -1,3 +1,17 @@
-.test[type=checkbox] {
+.checkboxDelete[type=checkbox] {
     filter: hue-rotate(140deg)
+}
+
+.tableTotalPrices {
+    width: 40%; 
+    float: right; 
+    text-align: center;
+}
+
+.tableTotalPricesFlex {
+    flex: auto;
+}
+
+.footbar {
+    display: flex;
 }

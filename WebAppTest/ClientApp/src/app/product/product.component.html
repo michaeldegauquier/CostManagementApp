@@ -39,7 +39,7 @@
                 </th>
                 <td mat-cell class="table_td" *matCellDef="let product">
                     <div>
-                        <input class="test" type="checkbox" id="deleteCheckbox" name="deleteCheckbox" (change)="deleteItemCheck(product.id, $event)">
+                        <input class="checkboxDelete" type="checkbox" id="deleteCheckbox" name="deleteCheckbox" (change)="deleteItemCheck(product.id, $event)">
                     </div>
                 </td>
             </ng-container>
@@ -119,18 +119,40 @@
 
     <hr/>
 
-    <table class="tableTotalPrices">
-        <tr>
-          <th>Nog te betalen</th>
-          <th>Betaald</th>
-          <th>Totale kosten</th>
-        </tr>
-        <tr>
-          <td class="priceToPaidColor">€ {{totalToPaid}}</td>
-          <td class="pricePaidColor">€ {{totalPaid}}</td>
-          <td>€ {{totalPrice}}</td>
-        </tr>
-      </table>
+    <div class="footbar">
+        <ul>
+            <li *ngIf="deleteGroup === false">
+                <button class="normalButton buttonColor" (click)="deleteGroupButton()">
+                    <i class="material-icons md-18">delete</i> Verwijder groep
+                </button>
+            </li>
+            <li *ngIf="deleteGroup === true">
+                <button class="normalButton deleteButton" (click)="deleteProductByGroupOfIds()">
+                    <i class="material-icons md-18">delete_outline</i>
+                </button>
+            </li>
+            <li *ngIf="deleteGroup === true">
+                <button class="normalButton deleteButton" (click)="deleteGroupButton()">
+                    <i class="material-icons md-18">delete_forever</i> Annuleer
+                </button>
+            </li>
+        </ul>
+
+        <div class="tableTotalPricesFlex">
+            <table class="tableTotalPrices">
+                <tr>
+                  <th>Nog te betalen</th>
+                  <th>Betaald</th>
+                  <th>Totale kosten</th>
+                </tr>
+                <tr>
+                  <td class="priceToPaidColor">€ {{totalToPaid}}</td>
+                  <td class="pricePaidColor">€ {{totalPaid}}</td>
+                  <td>€ {{totalPrice}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!--ProductCreateComponent in Modal-->

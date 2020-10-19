@@ -74,4 +74,11 @@ export class ProductService {
     const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
     return await this.http.delete(this.rootUrl + '/Product/' + id, {headers: headers}).toPromise();
   }
+
+  async deleteProductByGroupOfIds(ids: Array<number>) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token});
+    return await this.http.delete(this.rootUrl +
+      `/Product/DeleteGroup?ids=${ids}`, {headers: headers}).toPromise();
+  }
 }
